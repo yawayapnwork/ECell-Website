@@ -1,5 +1,4 @@
 import { Slide, Fade } from 'react-awesome-reveal';
-import { GiPolarStar } from "react-icons/gi";
 import AchievementCarousel from "./AchievementCarousel";
 import tes3 from "../assets/tes3convrted.webp";
 import tes2 from "../assets/tes2.webp";
@@ -23,16 +22,11 @@ function Activities() {
         {/* Activity - 1: NEC */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center">
           <div className="flex flex-col justify-center">
-            <div
-              style={{ backgroundColor: '#141412', color: '#ffde59', border: '1px solid #26250F' }}
-              className="rounded-full px-4 py-1 mb-4 w-fit"
-            >
-              <Fade cascade>
-                <span className="flex items-center gap-2 text-sm font-semibold tracking-wide">
-                  <GiPolarStar aria-hidden="true" /> NATIONAL RECOGNITION
-                </span>
-              </Fade>
-            </div>
+            <Fade cascade>
+              <p className="text-[#ffde59] text-xs sm:text-sm font-semibold uppercase tracking-wider mb-2">
+                NATIONAL RECOGNITION
+              </p>
+            </Fade>
             <h2 className="text-3xl sm:text-4xl font-bold leading-tight">
               National <span className="text-[#ffde59]">Entrepreneurship</span> Challenge
             </h2>
@@ -59,16 +53,11 @@ function Activities() {
             />
           </div>
           <div className="flex flex-col justify-center order-1 md:order-2">
-            <div
-              style={{ backgroundColor: '#141412', color: '#ffde59', border: '1px solid #26250F' }}
-              className="rounded-full px-4 py-1 mb-4 w-fit"
-            >
-              <Fade cascade>
-                <span className="flex items-center gap-2 text-sm font-semibold tracking-wide">
-                  <GiPolarStar aria-hidden="true" /> REGIONAL EXCELLENCE
-                </span>
-              </Fade>
-            </div>
+            <Fade cascade>
+              <p className="text-[#ffde59] text-xs sm:text-sm font-semibold uppercase tracking-wider mb-2">
+                REGIONAL EXCELLENCE
+              </p>
+            </Fade>
             <h2 className="text-3xl sm:text-4xl font-bold leading-tight">
               Runner Up at <span className="text-[#ffde59]">Eureka 2024</span>
             </h2>
@@ -84,16 +73,11 @@ function Activities() {
         {/* Activity - 3: Startup Visits */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center">
           <div className="flex flex-col justify-center">
-            <div
-              style={{ backgroundColor: '#141412', color: '#ffde59', border: '1px solid #26250F' }}
-              className="rounded-full px-4 py-1 mb-4 w-fit"
-            >
-              <Fade cascade>
-                <span className="flex items-center gap-2 text-sm font-semibold tracking-wide">
-                  <GiPolarStar aria-hidden="true" /> REAL WORLD EXPOSURE
-                </span>
-              </Fade>
-            </div>
+            <Fade cascade>
+              <p className="text-[#ffde59] text-xs sm:text-sm font-semibold uppercase tracking-wider mb-2">
+                REAL WORLD EXPOSURE
+              </p>
+            </Fade>
             <h2 className="text-3xl sm:text-4xl font-bold leading-tight">
               Visits to <span className="text-[#ffde59]">startups</span> and incubators
             </h2>
@@ -128,16 +112,11 @@ function Activities() {
             <AchievementCarousel images={images1} />
           </div>
           <div className="flex flex-col justify-center order-1 md:order-2">
-            <div
-              style={{ backgroundColor: '#141412', color: '#ffde59', border: '1px solid #26250F' }}
-              className="rounded-full px-4 py-1 mb-4 w-fit"
-            >
-              <Fade cascade>
-                <span className="flex items-center gap-2 text-sm font-semibold tracking-wide">
-                  <GiPolarStar aria-hidden="true" /> ENGAGING INITIATIVES
-                </span>
-              </Fade>
-            </div>
+            <Fade cascade>
+              <p className="text-[#ffde59] text-xs sm:text-sm font-semibold uppercase tracking-wider mb-2">
+                ENGAGING INITIATIVES
+              </p>
+            </Fade>
             <h2 className="text-3xl sm:text-4xl font-bold leading-tight">
               Flagship events driving <span className="text-[#ffde59]">Entrepreneurship</span>
             </h2>
@@ -147,19 +126,19 @@ function Activities() {
             <ul className="mt-4 space-y-2 text-zinc-300 text-sm sm:text-base">
               <li className="flex items-start gap-2">
                 <span className="text-[#ffde59] font-bold mt-0.5">&bull;</span>
-                <span>The Entrepreneurship Show (TES) — Annual Flagship Summit</span>
+                <span>The Entrepreneurship Show (TES) - Annual Flagship Summit</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-[#ffde59] font-bold mt-0.5">&bull;</span>
-                <span>BizzMantra — Business Plan &amp; Innovation Arena</span>
+                <span>BizzMantra - Business Plan &amp; Innovation Arena</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-[#ffde59] font-bold mt-0.5">&bull;</span>
-                <span>E-Summit (Techpravaah) — Conclave of Investors &amp; Tech Leaders</span>
+                <span>E-Summit (Techpravaah) - Conclave of Investors &amp; Tech Leaders</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-[#ffde59] font-bold mt-0.5">&bull;</span>
-                <span>Achiever&apos;s Talk — Interactive Dialogue with Established Founders</span>
+                <span>Achiever&apos;s Talk - Interactive Dialogue with Established Founders</span>
               </li>
             </ul>
           </div>

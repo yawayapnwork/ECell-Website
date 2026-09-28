@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import NetworkCards from "./NetworkCards";
-import { GiPolarStar } from "react-icons/gi";
 import { Fade } from "react-awesome-reveal";
 import kmc from "../assets/MOU_clg/kmc.jpg";
 import mnit from "../assets/MOU_clg/MNIT.png";
@@ -97,21 +96,11 @@ function Networking() {
       <div className="flex flex-col items-center gap-10 mx-auto max-w-6xl lg:flex-row">
         {/* Left Section */}
         <div className="w-full lg:w-1/2">
-          <div
-            className="px-4 py-1 mb-4 rounded-full w-fit"
-            style={{
-              backgroundColor: "#141412",
-              color: "#ffde59",
-              border: "1px solid #26250F",
-            }}
-          >
-            <Fade cascade>
-              <span className="flex items-center gap-2 text-sm font-semibold tracking-wide">
-                <GiPolarStar aria-hidden="true" />
-                NETWORKING
-              </span>
-            </Fade>
-          </div>
+          <Fade cascade>
+            <p className="text-[#ffde59] text-xs sm:text-sm font-semibold uppercase tracking-wider mb-2">
+              NETWORKING
+            </p>
+          </Fade>
           <h2 className="mb-4 text-3xl sm:text-4xl font-bold">
             Strategic <span className="text-[#ffde59]">Partnerships</span>
           </h2>

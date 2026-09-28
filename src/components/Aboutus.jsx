@@ -1,7 +1,6 @@
 import AchievementCarousel from "./AchievementCarousel";
 import '../App.css';
 import { Fade } from 'react-awesome-reveal';
-import { GiPolarStar } from "react-icons/gi";
 import ach1 from "../assets/achievements1.webp";
 import ach2 from "../assets/achievements2.jpg";
 import ach3 from "../assets/nec25.webp";
@@ -19,16 +18,11 @@ function Aboutus() {
         {/* Story Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center">
           <div className="flex flex-col justify-center">
-            <div
-              style={{ backgroundColor: '#141412', color: '#ffde59', border: '1px solid #26250F' }}
-              className="rounded-full px-4 py-1 mb-4 w-fit"
-            >
-              <Fade cascade>
-                <span className="flex items-center gap-2 text-sm font-semibold tracking-wide">
-                  <GiPolarStar aria-hidden="true" /> ABOUT US
-                </span>
-              </Fade>
-            </div>
+            <Fade cascade>
+              <p className="text-[#ffde59] text-xs sm:text-sm font-semibold uppercase tracking-wider mb-2">
+                ABOUT US
+              </p>
+            </Fade>
             <h2 className="text-3xl sm:text-4xl font-bold leading-tight">
               <span className="text-[#ffde59]">Fast Tracking </span>the idea into reality with E-Cell ABESEC
             </h2>
@@ -49,16 +43,11 @@ function Aboutus() {
         {/* Achievements Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center">
           <div className="flex flex-col">
-            <div
-              style={{ backgroundColor: '#141412', color: '#ffde59', border: '1px solid #26250F' }}
-              className="rounded-full px-4 py-1 mb-4 w-fit"
-            >
-              <Fade cascade>
-                <span className="flex items-center gap-2 text-sm font-semibold tracking-wide">
-                  <GiPolarStar aria-hidden="true" /> ACHIEVEMENTS
-                </span>
-              </Fade>
-            </div>
+            <Fade cascade>
+              <p className="text-[#ffde59] text-xs sm:text-sm font-semibold uppercase tracking-wider mb-2">
+                ACHIEVEMENTS
+              </p>
+            </Fade>
 
             <h2 className="text-3xl sm:text-4xl font-bold leading-tight">
               Highlight <span className="text-[#ffde59]">achievements</span> by the <span className="text-[#ffde59]">numbers</span>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, Calendar, Share2, Star, Sparkles, Check } from "lucide-react";
+import { ArrowLeft, Calendar, Share2, Star, Check } from "lucide-react";
 import events, { createSlug } from "./EventsData";
 import AchievementCarousel from "./AchievementCarousel";
 
@@ -107,12 +107,9 @@ const EventDetail = () => {
             }`}
           >
             <div>
-              <div className="inline-flex items-center px-3 py-1 bg-black/60 rounded-full border border-[#26250F] mb-4">
-                <Sparkles className="h-3.5 w-3.5 text-[#ffde59] mr-2" />
-                <span className="text-[#ffde59] font-medium text-xs tracking-wide">
-                  FEATURED EVENT
-                </span>
-              </div>
+              <p className="text-[#ffde59] font-semibold text-xs uppercase tracking-wider mb-3">
+                FEATURED EVENT
+              </p>
 
               <h1 className="text-2xl sm:text-3xl font-extrabold text-white leading-tight mb-3">
                 {event.title}

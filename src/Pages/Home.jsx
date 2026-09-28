@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Fade, Slide } from 'react-awesome-reveal';
-import { GiPolarStar } from "react-icons/gi";
 import Activities from '../components/Activities';
 import Testimonial from '../components/Testimonial';
 import Networking from '../components/Networking';
@@ -29,17 +28,11 @@ function Home() {
         />
 
         <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
-          {/* Badge */}
-          <div
-            style={{ backgroundColor: '#141412', color: '#FFDE59', border: '1px solid #26250F' }}
-            className="rounded-full px-4 py-1.5 mb-6 shadow-sm inline-flex items-center gap-2 text-xs sm:text-sm font-semibold tracking-wide"
-          >
-            <Fade triggerOnce>
-              <span className="flex items-center gap-2">
-                <GiPolarStar aria-hidden="true" /> From Ideas to Imprint
-              </span>
-            </Fade>
-          </div>
+          <Fade triggerOnce>
+            <p className="text-[#FFDE59] text-xs sm:text-sm font-semibold uppercase tracking-wider mb-4">
+              From Ideas to Imprint
+            </p>
+          </Fade>
 
           {/* Heading */}
           <Fade triggerOnce cascade damping={0.15}>
@@ -100,19 +93,14 @@ function Home() {
       {/* Who We Are / Mission Section */}
       <section className="text-white py-16 px-4 sm:px-6 lg:px-8 border-t border-zinc-900">
         <div className="max-w-6xl mx-auto text-center mb-12">
-          <div
-            style={{ backgroundColor: '#141412', color: '#ffde59', border: '1px solid #26250F' }}
-            className="rounded-full px-4 py-1 mb-4 w-fit mx-auto"
-          >
-            <Fade triggerOnce>
-              <span className="flex items-center gap-2 text-sm font-semibold tracking-wide">
-                <GiPolarStar aria-hidden="true" /> ABOUT US
-              </span>
-            </Fade>
-          </div>
+          <Fade triggerOnce>
+            <p className="text-[#ffde59] text-xs sm:text-sm font-semibold uppercase tracking-wider mb-2">
+              ABOUT US
+            </p>
+          </Fade>
           <h2 className="text-3xl sm:text-5xl font-bold tracking-tight">Who We Are</h2>
           <p className="mt-4 text-zinc-300 text-sm sm:text-base md:text-lg max-w-4xl mx-auto leading-relaxed">
-            At the Entrepreneurship Cell (E-Cell) of ABES Engineering College, we&apos;re a vibrant community of student innovators driven by curiosity, ambition, and a shared passion for turning ideas into impact. Founded and run entirely by students, our core belief is that entrepreneurship isn&apos;t just a career&mdash;it&apos;s a way of thinking that empowers individuals to identify opportunities, take thoughtful risks, and continuously learn. From casual brainstorming sessions in campus cafes to organizing large-scale pitching events, we grow stronger together.
+            At the Entrepreneurship Cell (E-Cell) of ABES Engineering College, we&apos;re a vibrant community of student innovators driven by curiosity, ambition, and a shared passion for turning ideas into impact. Founded and run entirely by students, our core belief is that entrepreneurship isn&apos;t just a career - it&apos;s a way of thinking that empowers individuals to identify opportunities, take thoughtful risks, and continuously learn. From casual brainstorming sessions in campus cafes to organizing large-scale pitching events, we grow stronger together.
           </p>
         </div>
 

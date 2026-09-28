@@ -1,4 +1,3 @@
-import { GiPolarStar } from "react-icons/gi";
 import sir from '../assets/sir.png';
 import { Fade } from 'react-awesome-reveal';
 
@@ -7,16 +6,11 @@ const Mentor = () => {
     <section className="text-white py-12 px-4 sm:px-6">
       {/* Section Heading */}
       <div className="text-center mb-8">
-        <div
-          style={{ backgroundColor: '#141412', color: '#ffde59', border: '1px solid #26250F' }}
-          className="rounded-full px-4 py-1 mb-4 w-fit m-auto"
-        >
-          <Fade cascade>
-            <span className="flex items-center gap-2 text-sm font-semibold tracking-wide">
-              <GiPolarStar aria-hidden="true" /> Mentor&apos;s Message
-            </span>
-          </Fade>
-        </div>
+        <Fade cascade>
+          <p className="text-[#ffde59] text-xs sm:text-sm font-semibold uppercase tracking-wider mb-2">
+            Mentor&apos;s Message
+          </p>
+        </Fade>
         <h2 className="text-3xl sm:text-4xl font-bold">Words from Our Faculty Mentor</h2>
       </div>
 
@@ -28,10 +22,10 @@ const Mentor = () => {
           style={{ backgroundColor: '#131412' }}
         >
           <blockquote className="text-base sm:text-lg leading-relaxed text-zinc-300">
-            &ldquo;Entrepreneurship is key to job creation and economic growth &mdash; especially in countries like ours where nurturing startups and technopreneurs is urgent. At E-CELL, we foster an entrepreneurial mindset through student-led initiatives like E-Summit, workshops, meetups, and more. I invite all students to explore, engage, and innovate with us.&rdquo;
+            &ldquo;Entrepreneurship is key to job creation and economic growth - especially in countries like ours where nurturing startups and technopreneurs is urgent. At E-CELL, we foster an entrepreneurial mindset through student-led initiatives like E-Summit, workshops, meetups, and more. I invite all students to explore, engage, and innovate with us.&rdquo;
           </blockquote>
           <p className="mt-6 text-right font-semibold text-[#ffde59]">
-            &mdash; Mahendra Kumar Gupta
+            - Mahendra Kumar Gupta
             <br />
             <span className="text-sm font-normal text-zinc-400">Faculty Mentor, E-Cell ABESEC</span>
           </p>

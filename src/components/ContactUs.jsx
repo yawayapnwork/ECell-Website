@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { GiPolarStar } from "react-icons/gi";
 import { Fade } from "react-awesome-reveal";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
@@ -109,20 +108,11 @@ function ContactUs() {
     <div className="min-h-screen bg-black text-white pt-28 sm:pt-36 pb-20 px-4 sm:px-6 lg:px-8">
       {/* Header */}
       <div className="max-w-4xl mx-auto text-center mb-12">
-        <div
-          className="rounded-full px-4 py-1.5 mb-4 mx-auto w-fit inline-flex items-center gap-2 text-xs sm:text-sm font-semibold tracking-wide"
-          style={{
-            backgroundColor: "#141412",
-            color: "#ffde59",
-            border: "1px solid #26250F",
-          }}
-        >
-          <Fade cascade triggerOnce>
-            <span className="flex items-center gap-2">
-              <GiPolarStar aria-hidden="true" /> CONTACT US
-            </span>
-          </Fade>
-        </div>
+        <Fade cascade triggerOnce>
+          <p className="text-[#ffde59] text-xs sm:text-sm font-semibold uppercase tracking-wider mb-2">
+            CONTACT US
+          </p>
+        </Fade>
         <Fade triggerOnce>
           <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight">
             Reach Us <span className="text-[#ffed59]">Here</span>

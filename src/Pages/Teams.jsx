@@ -6,7 +6,6 @@ import Volunteers from "../components/Volunteers";
 import { teamData, sectionData } from "../components/DataTeam";
 import { FaInstagram } from "react-icons/fa6";
 import { PiLinkedinLogoBold } from "react-icons/pi";
-import { GiPolarStar } from "react-icons/gi";
 
 function Teams() {
   const [currentTeam, setCurrentTeam] = useState("2025-2026");
@@ -28,13 +27,9 @@ function Teams() {
       <section className="pt-32 sm:pt-36 pb-10 px-4 sm:px-6 flex flex-col items-center justify-center text-center">
         <div className="max-w-4xl mx-auto">
           <Fade triggerOnce cascade damping={0.15}>
-            <div
-              style={{ backgroundColor: "#141412", color: "#ffde59", border: "1px solid #26250F" }}
-              className="rounded-full px-4 py-1.5 mb-6 inline-flex items-center gap-2 text-xs sm:text-sm font-semibold tracking-wide"
-            >
-              <GiPolarStar aria-hidden="true" />
-              <span>THE LEADERSHIP &amp; DRIVING FORCE</span>
-            </div>
+            <p className="text-[#ffde59] text-xs sm:text-sm font-semibold uppercase tracking-wider mb-3">
+              THE LEADERSHIP &amp; DRIVING FORCE
+            </p>
 
             <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-3">
               <span className="text-[#ffde59]">
@@ -152,21 +147,13 @@ export const TeamSection = ({ members }) => {
 export const SectionHeader = ({ badge, title }) => {
   return (
     <div className="text-center mb-8">
-      <div
-        style={{
-          backgroundColor: "#141412",
-          color: "#ffde59",
-          border: "1px solid #26250F",
-        }}
-        className="rounded-full px-4 py-1 mb-4 w-fit mx-auto"
-      >
+      {badge && (
         <Fade triggerOnce>
-          <span className="flex items-center gap-2 text-sm font-semibold tracking-wide">
-            <GiPolarStar aria-hidden="true" />
+          <p className="text-[#ffde59] text-xs sm:text-sm font-semibold uppercase tracking-wider mb-2">
             {badge}
-          </span>
+          </p>
         </Fade>
-      </div>
+      )}
       <h2 className="text-3xl sm:text-5xl font-bold tracking-tight">
         {title.split(" ").map((word, index) =>
           word === "Team" || word === "Mentors" || word === "Alumni" ? (

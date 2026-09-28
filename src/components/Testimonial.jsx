@@ -1,4 +1,3 @@
-import { GiPolarStar } from "react-icons/gi";
 import dg from "../assets/dg.webp";
 import founder from "../assets/founder.jpg";
 import president from "../assets/president.webp";
@@ -88,11 +87,9 @@ function Testimonial() {
     <section className="w-full bg-black py-16 relative overflow-hidden">
       {/* Testimonials Section Header */}
       <div className="flex flex-col items-center mb-12 relative z-0 px-4 text-center">
-        <div className="rounded-full px-4 py-1 mb-4 w-fit bg-[#141412] border border-[#26250F]">
-          <span className="flex items-center gap-2 text-sm font-semibold tracking-wide text-[#ffde59]">
-            <GiPolarStar aria-hidden="true" /> TESTIMONIALS
-          </span>
-        </div>
+        <p className="text-[#ffde59] text-xs sm:text-sm font-semibold uppercase tracking-wider mb-2">
+          TESTIMONIALS
+        </p>
         <h2 className="text-3xl sm:text-5xl font-semibold text-center text-white">
           Voices of <span className="text-[#ffde59]">Our Community</span>
         </h2>

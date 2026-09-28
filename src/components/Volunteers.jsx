@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { GiPolarStar } from "react-icons/gi";
 import { Fade } from "react-awesome-reveal";
 
 
@@ -126,16 +125,11 @@ const Volunteers = ({ currentTeam }) => {
     <section className="bg-black text-white py-14 px-4 sm:px-6 lg:px-8 text-center">
       {/* Section Header */}
       <div className="text-center mb-8">
-        <div
-          style={{ backgroundColor: "#141412", color: "#ffde59", border: "1px solid #26250F" }}
-          className="rounded-full px-4 py-1 mb-4 w-fit m-auto"
-        >
-          <Fade cascade>
-            <span className="flex items-center gap-2 text-sm font-semibold tracking-wide">
-              <GiPolarStar aria-hidden="true" /> VOLUNTEERS
-            </span>
-          </Fade>
-        </div>
+        <Fade cascade>
+          <p className="text-[#ffde59] text-xs sm:text-sm font-semibold uppercase tracking-wider mb-2">
+            VOLUNTEERS
+          </p>
+        </Fade>
         <h2 className="text-3xl sm:text-5xl font-bold">
           Team <span className="text-[#ffed59]">{currentTeam}</span> Volunteers
         </h2>

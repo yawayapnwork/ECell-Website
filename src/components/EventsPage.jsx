@@ -1,7 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Fade } from 'react-awesome-reveal';
-import { GiPolarStar } from "react-icons/gi";
 import events, { createSlug } from './EventsData';
 import Idea from './Idea';
 
@@ -41,9 +40,9 @@ const EventCard = ({ event }) => {
       {/* Card Content & Metadata */}
       <div className="p-6 flex flex-col flex-1 justify-between">
         <div>
-          <span className="inline-block px-3 py-1 bg-black/60 border border-[#26250F] text-[#ffde59] text-xs font-semibold rounded-full mb-3">
+          <p className="text-[#ffde59] text-xs font-medium tracking-wide mb-2">
             {event.date || 'Date TBA'}
-          </span>
+          </p>
           <h3 className="text-xl font-bold text-white group-hover:text-[#ffde59] transition-colors leading-snug line-clamp-2">
             {event.title}
           </h3>
@@ -97,16 +96,11 @@ const EventsPage = () => {
       <section className="pt-32 sm:pt-36 pb-16 px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-4xl mx-auto text-center mb-10">
-          <div
-            style={{ backgroundColor: '#141412', color: '#ffde59', border: '1px solid #26250F' }}
-            className="rounded-full px-4 py-1.5 mb-6 w-fit mx-auto inline-flex items-center gap-2 text-xs sm:text-sm font-semibold tracking-wide"
-          >
-            <Fade triggerOnce>
-              <span className="flex items-center gap-2">
-                <GiPolarStar aria-hidden="true" /> FLAGSHIP INITIATIVES &amp; EXPERIENCES
-              </span>
-            </Fade>
-          </div>
+          <Fade triggerOnce>
+            <p className="text-[#ffde59] text-xs sm:text-sm font-semibold uppercase tracking-wider mb-3">
+              FLAGSHIP INITIATIVES &amp; EXPERIENCES
+            </p>
+          </Fade>
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight mb-4">
             Events at <span className="text-[#ffed59]">E-Cell ABESEC</span>
           </h1>
