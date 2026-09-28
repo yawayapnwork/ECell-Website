@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { GiPolarStar } from "react-icons/gi";
 import { Fade } from "react-awesome-reveal";
 
@@ -113,8 +113,17 @@ const Volunteers = ({ currentTeam }) => {
   const roles = [...new Set(teamVolunteers.map((v) => v.role))];
   const [selectedRole, setSelectedRole] = useState(null);
 
+  // Automatically reset role filter when team year changes
+  useEffect(() => {
+    setSelectedRole(null);
+  }, [currentTeam]);
+
+  const filteredVolunteers = selectedRole
+    ? teamVolunteers.filter((volunteer) => volunteer.role === selectedRole)
+    : teamVolunteers;
+
   return (
-    <div className="bg-black text-white min-h-screen py-10 px-4 md:px-20 text-center">
+    <section className="bg-black text-white py-14 px-4 sm:px-6 lg:px-8 text-center">
       {/* Section Header */}
       <div className="text-center mb-8">
         <div
@@ -122,56 +131,69 @@ const Volunteers = ({ currentTeam }) => {
           className="rounded-full px-4 py-1 mb-4 w-fit m-auto"
         >
           <Fade cascade>
-            <span className="flex items-center gap-2 text-xl">
-              <GiPolarStar />Team
+            <span className="flex items-center gap-2 text-sm font-semibold tracking-wide">
+              <GiPolarStar aria-hidden="true" /> VOLUNTEERS
             </span>
           </Fade>
         </div>
-        <h1 className="text-5xl font-bold">
-          Team <span className="text-[#ffed59]">{currentTeam}</span>
-        </h1>
+        <h2 className="text-3xl sm:text-5xl font-bold">
+          Team <span className="text-[#ffed59]">{currentTeam}</span> Volunteers
+        </h2>
+        <p className="text-zinc-400 text-sm sm:text-base mt-2 max-w-xl mx-auto">
+          The passionate minds driving operations, events, outreach, and technical infrastructure.
+        </p>
       </div>
 
       {/* Role Filter Buttons */}
-      <div className="flex flex-wrap justify-center gap-4 mb-6">
-        {roles.map((role, index) => (
-          <button
-            key={index}
-            onClick={() => setSelectedRole(role)}
-            className={`px-6 py-3 rounded-full shadow-md transition-all duration-300 ${
-              selectedRole === role
-                ? "bg-yellow-500 text-black font-bold"
-                : "bg-gray-800 text-white hover:bg-gray-700"
-            }`}
-          >
-            {role}
-          </button>
-        ))}
-        {selectedRole && (
-          <button
-            onClick={() => setSelectedRole(null)}
-            className="px-6 py-3 rounded-full shadow-md transition-all duration-300 bg-red-600 text-white hover:bg-red-500"
-          >
-            Clear Filter
-          </button>
-        )}
+      <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 max-w-4xl mx-auto">
+        <button
+          onClick={() => setSelectedRole(null)}
+          className={`px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 ${
+            selectedRole === null
+              ? "bg-[#ffde59] text-black shadow-[0_0_15px_rgba(255,222,89,0.3)]"
+              : "bg-[#131412] text-zinc-300 border border-[#26250F] hover:border-zinc-600 hover:text-white"
+          }`}
+        >
+          All Roles ({teamVolunteers.length})
+        </button>
+
+        {roles.map((role, index) => {
+          const count = teamVolunteers.filter((v) => v.role === role).length;
+          return (
+            <button
+              key={index}
+              onClick={() => setSelectedRole(role)}
+              className={`px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 ${
+                selectedRole === role
+                  ? "bg-[#ffde59] text-black shadow-[0_0_15px_rgba(255,222,89,0.3)]"
+                  : "bg-[#131412] text-zinc-300 border border-[#26250F] hover:border-zinc-600 hover:text-white"
+              }`}
+            >
+              {role} ({count})
+            </button>
+          );
+        })}
       </div>
 
-      {/* Volunteers Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {teamVolunteers
-          .filter((volunteer) => !selectedRole || volunteer.role === selectedRole)
-          .map((volunteer, index) => (
+      {/* Volunteers Grid or Empty State */}
+      {filteredVolunteers.length === 0 ? (
+        <div className="p-8 text-center text-zinc-400 bg-[#131412] rounded-2xl border border-[#26250F] max-w-md mx-auto">
+          No volunteers found for this filter.
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
+          {filteredVolunteers.map((volunteer, index) => (
             <div
               key={index}
-              className="bg-gray-800 rounded-lg shadow-lg p-4 flex flex-col justify-center items-center text-center border border-gray-700"
+              className="bg-[#131412] rounded-xl p-4 flex flex-col justify-center items-center text-center border border-[#26250F] hover:border-[#ffde59]/40 transition-colors shadow-sm"
             >
-              <h2 className="text-xl font-semibold mb-2 text-white">{volunteer.name}</h2>
-              <p className="text-yellow-500 text-sm font-medium">{volunteer.role}</p>
+              <h3 className="text-base font-semibold text-white mb-1">{volunteer.name}</h3>
+              <p className="text-[#ffde59] text-xs font-medium tracking-wide">{volunteer.role}</p>
             </div>
           ))}
-      </div>
-    </div>
+        </div>
+      )}
+    </section>
   );
 };
 

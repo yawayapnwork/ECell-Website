@@ -1,16 +1,23 @@
-import React, { useState, useCallback } from "react";
+import { useState } from "react";
 import { GiPolarStar } from "react-icons/gi";
 import { Fade } from "react-awesome-reveal";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { AiOutlineInstagram, AiOutlineMail, AiOutlineWhatsApp, AiOutlineYoutube } from "react-icons/ai"; // Import white icons
+import {
+  AiOutlineInstagram,
+  AiOutlineMail,
+  AiOutlineWhatsApp,
+  AiOutlineYoutube,
+} from "react-icons/ai";
+import { FiCheckCircle, FiAlertCircle, FiLoader } from "react-icons/fi";
 
+// Custom Leaflet marker icon
 const customIcon = new L.Icon({
   iconUrl: "https://cdn-icons-png.flaticon.com/128/684/684908.png",
-  iconSize: [35, 45],
-  iconAnchor: [17, 42],
-  popupAnchor: [0, -36],
+  iconSize: [32, 42],
+  iconAnchor: [16, 42],
+  popupAnchor: [0, -38],
 });
 
 function ContactUs() {
@@ -20,177 +27,369 @@ function ContactUs() {
     message: "",
   });
 
-  const [formStatus, setFormStatus] = useState(""); // To display submission status
+  const [formErrors, setFormErrors] = useState({});
+  const [status, setStatus] = useState("idle"); // "idle" | "submitting" | "success" | "error"
+  const [statusMessage, setStatusMessage] = useState("");
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    // Clear validation error when user begins typing
+    if (formErrors[name]) {
+      setFormErrors((prev) => ({ ...prev, [name]: undefined }));
+    }
   };
 
-  const handleSubmit = useCallback(
-    async (e) => {
-      e.preventDefault();
-    },
-    []
-  );
+  const validate = () => {
+    const errors = {};
+    if (!formData.name.trim()) {
+      errors.name = "Please enter your name.";
+    }
 
-  const position = [28.6341, 77.4456]; // Coordinates for ABES Engineering College
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim()) {
+      errors.email = "Please enter your email address.";
+    } else if (!emailRegex.test(formData.email.trim())) {
+      errors.email = "Please provide a valid email format.";
+    }
+
+    if (!formData.message.trim()) {
+      errors.message = "Please enter a message before sending.";
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    setStatus("submitting");
+    setStatusMessage("");
+
+    try {
+      const response = await fetch("/contactus", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          message: formData.message.trim(),
+        }),
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (response.ok) {
+        setStatus("success");
+        setStatusMessage(
+          data.message || "Your message has been received! Our team will reach out soon."
+        );
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        setStatus("error");
+        setStatusMessage(
+          data.message || "Failed to submit form. Please verify and try again or email us directly."
+        );
+      }
+    } catch (err) {
+      setStatus("error");
+      setStatusMessage(
+        "Network or server connection issue. Please contact us directly at ecell@abes.ac.in."
+      );
+    }
+  };
+
+  const position = [28.6341, 77.4456]; // Coordinates for ABES Engineering College, Ghaziabad
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-black text-white pt-32 px-6">
-      {/* Heading Section */}
-      <div className="container mx-auto text-center mb-10 max-w-screen-xl">
+    <div className="min-h-screen bg-black text-white pt-28 sm:pt-36 pb-20 px-4 sm:px-6 lg:px-8">
+      {/* Header */}
+      <div className="max-w-4xl mx-auto text-center mb-12">
         <div
-          className="rounded-full px-4 py-1 mb-4 m-auto w-fit"
+          className="rounded-full px-4 py-1.5 mb-4 mx-auto w-fit inline-flex items-center gap-2 text-xs sm:text-sm font-semibold tracking-wide"
           style={{
             backgroundColor: "#141412",
             color: "#ffde59",
             border: "1px solid #26250F",
           }}
         >
-          <Fade cascade>
+          <Fade cascade triggerOnce>
             <span className="flex items-center gap-2">
               <GiPolarStar aria-hidden="true" /> CONTACT US
             </span>
           </Fade>
         </div>
-        <Fade>
-          <h1 className="text-5xl font-bold">
+        <Fade triggerOnce>
+          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight">
             Reach Us <span className="text-[#ffed59]">Here</span>
           </h1>
+          <p className="mt-3 text-zinc-400 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
+            Have questions about upcoming events, mentorship, partnerships, or startup incubation? Send us a message or connect through our official channels.
+          </p>
         </Fade>
       </div>
 
-      {/* Contact Section */}
-      <div className="max-w-5xl w-full flex flex-col md:flex-row items-center justify-between p-10 bg-gray-900 bg-opacity-50 border border-gray-700 rounded-xl shadow-2xl">
-        <div className="mb-10 md:mb-0 md:mr-12 text-center md:text-left">
-          <h1 className="text-5xl font-bold mb-6 text-yellow-400">
-            Get In Touch
-          </h1>
-          <p className="text-gray-300 leading-relaxed">
-            Need assistance or have questions? Don't hesitate to reach out to
-            us. Our team is happy to help.
-          </p>
-        </div>
+      {/* Main Grid Section */}
+      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16">
+        {/* Left Column: Direct Info & Official Links */}
+        <div className="lg:col-span-5 space-y-6">
+          <div className="bg-[#131412] border border-[#26250F] rounded-2xl p-6 sm:p-8 shadow-xl">
+            <h2 className="text-2xl font-bold text-[#ffde59] mb-3">Get In Touch</h2>
+            <p className="text-zinc-300 text-sm sm:text-base leading-relaxed mb-6">
+              Our student coordinators and faculty mentors are here to support your entrepreneurial ideas and collaboration requests.
+            </p>
 
-        {/* Form */}
-        <div className="w-full max-w-md bg-gray-800 p-8 rounded-lg shadow-lg border border-gray-700">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="flex flex-col">
-                <label className="text-sm text-gray-400 mb-2">Name</label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Enter your name"
-                  className="w-full p-3 rounded-lg bg-gray-900 text-white border border-gray-700 focus:ring-2 focus:ring-yellow-400 focus:outline-none"
-                />
-              </div>
-              <div className="flex flex-col">
-                <label className="text-sm text-gray-400 mb-2">Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="Enter your email"
-                  className="w-full p-3 rounded-lg bg-gray-900 text-white border border-gray-700 focus:ring-2 focus:ring-yellow-400 focus:outline-none"
-                />
-              </div>
-            </div>
-            <div className="flex flex-col">
-              <label className="text-sm text-gray-400 mb-2">Message</label>
-              <textarea
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                placeholder="Write your message here..."
-                className="w-full p-3 rounded-lg bg-gray-900 text-white border border-gray-700 focus:ring-2 focus:ring-yellow-400 focus:outline-none h-32"
-              ></textarea>
-            </div>
-            <button
-              type="submit"
-              className="w-full py-3 rounded-lg bg-yellow-500 text-black font-semibold hover:bg-yellow-600 transition duration-300 ease-in-out"
-            >
-              Send Message
-            </button>
-          </form>
+            <div className="space-y-4">
+              {/* Email */}
+              <a
+                href="mailto:ecell@abes.ac.in"
+                className="flex items-center gap-4 p-3 rounded-xl bg-black/40 border border-zinc-800 hover:border-[#ffde59]/50 hover:bg-[#ffde59]/5 transition-all group"
+              >
+                <div className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center text-xl text-[#ffde59]">
+                  <AiOutlineMail aria-hidden="true" />
+                </div>
+                <div>
+                  <p className="text-xs text-zinc-400 font-medium">Official Email</p>
+                  <p className="text-sm font-semibold text-white group-hover:text-[#ffde59] transition-colors">
+                    ecell@abes.ac.in
+                  </p>
+                </div>
+              </a>
 
-          {formStatus && (
-            <div className="mt-4 text-green-500 text-center">{formStatus}</div>
-          )}
-        </div>
-      </div>
+              {/* Instagram */}
+              <a
+                href="https://www.instagram.com/ecell_abesec"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-4 p-3 rounded-xl bg-black/40 border border-zinc-800 hover:border-[#ffde59]/50 hover:bg-[#ffde59]/5 transition-all group"
+              >
+                <div className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center text-xl text-[#ffde59]">
+                  <AiOutlineInstagram aria-hidden="true" />
+                </div>
+                <div>
+                  <p className="text-xs text-zinc-400 font-medium">Instagram</p>
+                  <p className="text-sm font-semibold text-white group-hover:text-[#ffde59] transition-colors">
+                    @ecell_abesec
+                  </p>
+                </div>
+              </a>
 
-      {/* Contact Info & Interactive Map Section */}
-      <div className="flex flex-col md:flex-row gap-12 items-center mt-16 w-full max-w-5xl px-5">
-        <div className="flex-1 space-y-6">
-          <div className="flex items-center space-x-5">
-          <AiOutlineMail className="text-5xl text-white" />
-            <div>
-              <p className="text-lg font-semibold">Email</p>
-              <a href="mailto:ecell@abes.ac.in" className="text-gray-400 hover:text-blue-500">ecell@abes.ac.in</a>
-            </div>
-          </div>
-          <div className="flex items-center space-x-5">
-          <AiOutlineInstagram className="text-5xl text-white" />
-            <div>
-              <p className="text-lg font-semibold">Instagram</p>
-              <a href="https://www.instagram.com/ecell_abesec" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-pink-500">@ecell_absec</a>
-            </div>
-          </div>
-          <div className="flex items-center space-x-5">
-            <AiOutlineWhatsApp className="text-5xl text-white" />
-            <div>
-              <p className="text-lg font-semibold">WhatsApp</p>
+              {/* WhatsApp */}
               <a
                 href="https://whatsapp.com/channel/0029VaEzRcf84Om7lps30D2F"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-green-500"
+                className="flex items-center gap-4 p-3 rounded-xl bg-black/40 border border-zinc-800 hover:border-[#ffde59]/50 hover:bg-[#ffde59]/5 transition-all group"
               >
-                Join on WhatsApp
+                <div className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center text-xl text-[#ffde59]">
+                  <AiOutlineWhatsApp aria-hidden="true" />
+                </div>
+                <div>
+                  <p className="text-xs text-zinc-400 font-medium">WhatsApp Channel</p>
+                  <p className="text-sm font-semibold text-white group-hover:text-[#ffde59] transition-colors">
+                    Join Community Updates
+                  </p>
+                </div>
               </a>
-            </div>
-          </div>
-          <div className="flex items-center space-x-5">
-            <AiOutlineYoutube className="text-5xl text-white" />
-            <div>
-              <p className="text-lg font-semibold">YouTube</p>
+
+              {/* YouTube */}
               <a
                 href="https://www.youtube.com/@E-CELL_ABESEC"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-red-500"
+                className="flex items-center gap-4 p-3 rounded-xl bg-black/40 border border-zinc-800 hover:border-[#ffde59]/50 hover:bg-[#ffde59]/5 transition-all group"
               >
-                E-Cell ABSEC
+                <div className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center text-xl text-[#ffde59]">
+                  <AiOutlineYoutube aria-hidden="true" />
+                </div>
+                <div>
+                  <p className="text-xs text-zinc-400 font-medium">YouTube Channel</p>
+                  <p className="text-sm font-semibold text-white group-hover:text-[#ffde59] transition-colors">
+                    @E-CELL_ABESEC
+                  </p>
+                </div>
               </a>
             </div>
           </div>
         </div>
 
-        {/* Interactive Map */}
-        <div className="relative w-full md:w-[400px] h-[300px] rounded-xl overflow-hidden shadow-2xl border border-gray-700 bg-gray-900">
+        {/* Right Column: Contact Form */}
+        <div className="lg:col-span-7 bg-[#131412] border border-[#26250F] p-6 sm:p-8 rounded-2xl shadow-xl">
+          <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">Send Us a Direct Message</h2>
+          <p className="text-zinc-400 text-xs sm:text-sm mb-6">
+            Fill in your details below and we will get back to you promptly.
+          </p>
+
+          {status === "success" ? (
+            <div className="p-8 text-center bg-black/40 border border-green-500/40 rounded-xl space-y-4 animate-fadeIn">
+              <FiCheckCircle className="w-12 h-12 text-green-400 mx-auto" aria-hidden="true" />
+              <h3 className="text-xl font-bold text-white">Message Sent Successfully!</h3>
+              <p className="text-zinc-300 text-sm max-w-md mx-auto leading-relaxed">
+                {statusMessage}
+              </p>
+              <button
+                type="button"
+                onClick={() => setStatus("idle")}
+                className="mt-4 px-6 py-2.5 rounded-full bg-[#ffde59] text-black font-semibold text-sm hover:bg-[#ffed59] transition-colors"
+              >
+                Send Another Message
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+              {status === "error" && (
+                <div
+                  className="p-4 bg-red-950/40 border border-red-800 rounded-xl flex items-start gap-3 text-red-200 text-sm"
+                  role="alert"
+                >
+                  <FiAlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                  <div className="flex-1">
+                    <p className="font-semibold">Unable to submit message</p>
+                    <p className="text-xs text-red-300 mt-0.5">{statusMessage}</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Name Field */}
+              <div>
+                <label
+                  htmlFor="contact-name"
+                  className="block text-xs font-semibold text-zinc-300 mb-1.5 tracking-wide"
+                >
+                  Your Full Name <span className="text-[#ffde59]">*</span>
+                </label>
+                <input
+                  id="contact-name"
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="e.g. Ashish Kumar"
+                  aria-invalid={!!formErrors.name}
+                  aria-describedby={formErrors.name ? "name-error" : undefined}
+                  className={`w-full p-3 rounded-xl bg-black/50 text-white border text-sm transition-colors focus:outline-none ${
+                    formErrors.name
+                      ? "border-red-500 focus:border-red-400"
+                      : "border-zinc-800 focus:border-[#ffde59]"
+                  }`}
+                />
+                {formErrors.name && (
+                  <p id="name-error" className="text-red-400 text-xs mt-1.5">
+                    {formErrors.name}
+                  </p>
+                )}
+              </div>
+
+              {/* Email Field */}
+              <div>
+                <label
+                  htmlFor="contact-email"
+                  className="block text-xs font-semibold text-zinc-300 mb-1.5 tracking-wide"
+                >
+                  Email Address <span className="text-[#ffde59]">*</span>
+                </label>
+                <input
+                  id="contact-email"
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="e.g. yourname@gmail.com"
+                  aria-invalid={!!formErrors.email}
+                  aria-describedby={formErrors.email ? "email-error" : undefined}
+                  className={`w-full p-3 rounded-xl bg-black/50 text-white border text-sm transition-colors focus:outline-none ${
+                    formErrors.email
+                      ? "border-red-500 focus:border-red-400"
+                      : "border-zinc-800 focus:border-[#ffde59]"
+                  }`}
+                />
+                {formErrors.email && (
+                  <p id="email-error" className="text-red-400 text-xs mt-1.5">
+                    {formErrors.email}
+                  </p>
+                )}
+              </div>
+
+              {/* Message Field */}
+              <div>
+                <label
+                  htmlFor="contact-message"
+                  className="block text-xs font-semibold text-zinc-300 mb-1.5 tracking-wide"
+                >
+                  Message / Inquiry <span className="text-[#ffde59]">*</span>
+                </label>
+                <textarea
+                  id="contact-message"
+                  name="message"
+                  rows={4}
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="How can we help? Share your inquiry or collaboration idea..."
+                  aria-invalid={!!formErrors.message}
+                  aria-describedby={formErrors.message ? "message-error" : undefined}
+                  className={`w-full p-3 rounded-xl bg-black/50 text-white border text-sm transition-colors focus:outline-none resize-y ${
+                    formErrors.message
+                      ? "border-red-500 focus:border-red-400"
+                      : "border-zinc-800 focus:border-[#ffde59]"
+                  }`}
+                />
+                {formErrors.message && (
+                  <p id="message-error" className="text-red-400 text-xs mt-1.5">
+                    {formErrors.message}
+                  </p>
+                )}
+              </div>
+
+              <button
+                type="submit"
+                disabled={status === "submitting"}
+                className="w-full py-3.5 rounded-xl bg-[#ffde59] hover:bg-[#ffed59] text-black font-bold text-sm tracking-wide transition-all shadow-[0_0_20px_rgba(255,222,89,0.2)] disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              >
+                {status === "submitting" ? (
+                  <>
+                    <FiLoader className="w-4 h-4 animate-spin" aria-hidden="true" />
+                    <span>Sending Message...</span>
+                  </>
+                ) : (
+                  <span>Send Message</span>
+                )}
+              </button>
+            </form>
+          )}
+        </div>
+      </div>
+
+      {/* Interactive Campus Map Section */}
+      <div className="max-w-6xl mx-auto bg-[#131412] border border-[#26250F] p-6 sm:p-8 rounded-2xl shadow-xl">
+        <div className="mb-4">
+          <h2 className="text-xl font-bold text-white">Our Location</h2>
+          <p className="text-zinc-400 text-sm">
+            ABES Engineering College, 19th KM Stone, NH-09, Ghaziabad, Uttar Pradesh 201009
+          </p>
+        </div>
+
+        <div className="w-full h-64 sm:h-80 md:h-96 rounded-xl overflow-hidden border border-zinc-800 z-0">
           <MapContainer
             center={position}
             zoom={15}
-            className="w-full h-full rounded-xl"
+            className="w-full h-full"
             zoomControl={true}
-            scrollWheelZoom={true}
-            dragging={true}
+            scrollWheelZoom={false}
           >
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              attribution="ABES Engineering College, Ghaziabad"
+              attribution="&copy; OpenStreetMap contributors"
             />
             <Marker position={position} icon={customIcon}>
               <Popup>
-                <span className="font-semibold text-lg">
-                  ABES Engineering College
-                </span>
-                <br />
-                Ghaziabad, India
+                <div className="p-1 text-black font-sans">
+                  <p className="font-bold text-sm">E-Cell ABESEC</p>
+                  <p className="text-xs text-gray-700">ABES Engineering College, Ghaziabad</p>
+                </div>
               </Popup>
             </Marker>
           </MapContainer>

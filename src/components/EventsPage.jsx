@@ -1,122 +1,156 @@
-import React from 'react';
+import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Slide, Fade } from 'react-awesome-reveal';
+import { Fade } from 'react-awesome-reveal';
 import { GiPolarStar } from "react-icons/gi";
+import events, { createSlug } from './EventsData';
 import Idea from './Idea';
 
-import TEC from "../assets/tes.png";
-import GOD from "../assets/god.webp";
-import Tech from "../assets/techpravaah.webp";
-import At from "../assets/at.webp";
-import fc from "../assets/fc.webp";
-import bid from "../assets/bid.webp"
-import nv from '../assets/nv.webp';  
-import erk from '../assets/eureka.webp';
-import tes3 from '../assets/tes3.0.webp';
-import bizz from '../assets/bizz25.png';
-import squid from '../assets/SQUID.png';
-import zonals from '../assets/bannerimage iitr event.webp'
-import keshav from "../assets/keshavjha.png"
-
-// Utility function to generate a URL-friendly slug from event title
-const createSlug = (title) => title.toLowerCase().replace(/ /g, '-');
-
-// Placeholder image for events with missing images
-const placeholderImage = "https://via.placeholder.com/300x200?text=No+Image";
-
-// Sample event data
-const events = [
-    { id:13, title:"The Entrepreneurship Show 4.0", date:"February 21st, 2026" , imgSrc: keshav},
-    { id:12, title:"IDEASTORM 2026 – Delhi NCR Zonal", date:"December 13th'25 " , imgSrc: zonals},
-    { id:11, title:"SQUID GAME 2025", date:"November 24th,25th,26th'25" , imgSrc: squid},
-    { id: 10 , title:"BizzMantra 2025", date: "May 31st '25", imgSrc: bizz },
-    { id: 9 , title:"The Entrepreneurship Show 2024", date: "November 30th '24", imgSrc: tes3 },
-    { id: 8, title: "Eureka", date: "September 10th '22", imgSrc: erk },
-    { id: 1, title: "The Entrepreneurship Show 2023", date: "February 27th '23", imgSrc: TEC },
-    { id: 2, title: "Navy Visit-2023", date: "March 15th '23", imgSrc: nv },
-    { id: 3, title: "FOUNDER'S CAP TRAINING", date: "April 10th '22", imgSrc: fc },
-    { id: 4, title: "Game of Drones", date: "November 18th '22", imgSrc: GOD },
-    { id: 5, title: "E-SUMMIT (TECHPRAVAAH)", date: "November 19th '22", imgSrc: Tech },
-    { id: 6, title: "BIDWISER (THE MOCK IPL AUCTION)", date: "Jan 18th '24", imgSrc: bid },
-    { id: 7, title: "ACHIEVER’S TALK", date: "November 18th '22", imgSrc: At },
-];
-
-// EventCard Component: Displays individual event information
-const EventCard = ({ id, title, date, imgSrc }) => {
-    const slug = createSlug(title); // Generate slug from title
-    const displayImage = imgSrc || placeholderImage; // Use placeholder image if imgSrc is empty
-
-    return (
-        <Slide direction="down" cascade>
-            <div
-                className="overflow-hidden text-white transition-transform duration-300 ease-in-out transform bg-gray-800 rounded-lg shadow-lg hover:scale-105"
-                style={{
-                    border: '1px solid #322d22',
-                    boxShadow: '20px -10px 100px #282410',
-                    backdropFilter: 'blur(10px)',
-                    backgroundColor: 'rgba(0, 0, 0, 0.6)',
-                    
-                }}
-                aria-label={`${title} event card`}
-            >
-                {/* Image Container */}
-                <div className="relative w-full overflow-hidden" style={{ paddingBottom: '56.25%' }}>
-                    <img
-                        src={displayImage}
-                        alt={title || 'Event Image'}
-                        className="absolute top-0 left-0 object-cover w-full h-full"
-                    />
-                </div>
-                {/* Card Content */}
-                <div className="p-4 bg-black">
-                    <h3 className="text-xl font-bold">{title}</h3>
-                    <p className="text-gray-400">{date || 'Date not available'}</p>
-                    <Link to={`/events/${slug}`} aria-label={`Read more about ${title}`}>
-                        <button
-                            className="px-6 py-2 mt-4 transition-colors duration-300 bg-transparent border border-white rounded-full hover:bg-white hover:text-black"
-                        >
-                            Read more
-                        </button>
-                    </Link>
-                </div>
-            </div>
-        </Slide>
-    );
+const extractYear = (dateStr) => {
+  if (!dateStr) return 'Other';
+  const match = dateStr.match(/20\d{2}|'\d{2}/);
+  if (match) {
+    let year = match[0];
+    if (year.startsWith("'")) {
+      year = `20${year.slice(1)}`;
+    }
+    return year;
+  }
+  return 'Other';
 };
 
+const EventCard = ({ event }) => {
+  const slug = createSlug(event.title);
+  const displayImage = event.image || event.imgSrc || "/placeholder.svg";
 
-// EventSection Component: Displays the list of events in a grid
-const EventSection = () => (
-    <section className="w-full px-4 py-32 bg-black md:px-8 lg:px-16">
+  return (
+    <article
+      className="group flex flex-col bg-[#131412] border border-[#26250F] rounded-2xl overflow-hidden shadow-lg hover:border-[#ffde59]/50 hover:shadow-yellow-500/5 transition-all duration-300"
+      aria-label={`${event.title} card`}
+    >
+      {/* Aspect-Ratio Standardized Image Container */}
+      <div className="relative w-full aspect-[16/10] overflow-hidden bg-zinc-900">
+        <img
+          src={displayImage}
+          alt={event.title}
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60"></div>
+      </div>
+
+      {/* Card Content & Metadata */}
+      <div className="p-6 flex flex-col flex-1 justify-between">
+        <div>
+          <span className="inline-block px-3 py-1 bg-black/60 border border-[#26250F] text-[#ffde59] text-xs font-semibold rounded-full mb-3">
+            {event.date || 'Date TBA'}
+          </span>
+          <h3 className="text-xl font-bold text-white group-hover:text-[#ffde59] transition-colors leading-snug line-clamp-2">
+            {event.title}
+          </h3>
+          {event.descriptionSections?.about && (
+            <p className="text-zinc-400 text-sm mt-2 line-clamp-3 leading-relaxed">
+              {event.descriptionSections.about}
+            </p>
+          )}
+        </div>
+
+        {/* Standardized Bottom CTA */}
+        <div className="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
+          <Link
+            to={`/events/${slug}`}
+            className="inline-flex items-center text-sm font-semibold text-white group-hover:text-[#ffde59] transition-colors focus:outline-none focus-visible:underline"
+            aria-label={`Read more about ${event.title}`}
+          >
+            <span>Read more</span>
+            <span className="ml-1.5 transition-transform group-hover:translate-x-1">&rarr;</span>
+          </Link>
+        </div>
+      </div>
+    </article>
+  );
+};
+
+const EventsPage = () => {
+  const [selectedYear, setSelectedYear] = useState('All');
+
+  // Reverse list so latest events appear at the top
+  const sortedEvents = useMemo(() => {
+    return [...events].reverse();
+  }, []);
+
+  // Compute available event years from real dates
+  const availableYears = useMemo(() => {
+    const years = new Set(sortedEvents.map(e => extractYear(e.date)));
+    years.delete('Other');
+    const sorted = Array.from(years).sort((a, b) => b.localeCompare(a));
+    return ['All', ...sorted];
+  }, [sortedEvents]);
+
+  // Filter events according to active tab
+  const filteredEvents = useMemo(() => {
+    if (selectedYear === 'All') return sortedEvents;
+    return sortedEvents.filter(e => extractYear(e.date) === selectedYear);
+  }, [selectedYear, sortedEvents]);
+
+  return (
+    <div className="bg-black text-white min-h-screen">
+      <section className="pt-32 sm:pt-36 pb-16 px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="container max-w-screen-xl mx-auto mb-10 text-center">
-            <div
-                className="px-4 py-1 m-auto mb-4 rounded-full w-fit"
-                style={{ backgroundColor: '#141412', color: '#ffde59', border: '1px solid #26250F' }}
-            >
-                <Fade cascade>
-                    <span className="flex items-center gap-2">
-                        <GiPolarStar aria-hidden="true" /> EVENTS
-                    </span>
-                </Fade>
-            </div>
-            <Fade>
-                <h1 className="mt-4 text-4xl font-bold text-white md:text-7xl">
-                    Entrepreneurship Cell <span className="text-[#ffed59]">ABESEC</span>
-                </h1>
+        <div className="max-w-4xl mx-auto text-center mb-10">
+          <div
+            style={{ backgroundColor: '#141412', color: '#ffde59', border: '1px solid #26250F' }}
+            className="rounded-full px-4 py-1.5 mb-6 w-fit mx-auto inline-flex items-center gap-2 text-xs sm:text-sm font-semibold tracking-wide"
+          >
+            <Fade triggerOnce>
+              <span className="flex items-center gap-2">
+                <GiPolarStar aria-hidden="true" /> FLAGSHIP INITIATIVES &amp; EXPERIENCES
+              </span>
             </Fade>
+          </div>
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight mb-4">
+            Events at <span className="text-[#ffed59]">E-Cell ABESEC</span>
+          </h1>
+          <p className="text-zinc-400 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+            From premier speaker summits to high-energy business simulations, explore the milestones and events created by our student innovators.
+          </p>
         </div>
 
-        {/* Events Grid */}
-        <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 max-w-screen-xl=">
-            {events.map(event => (
-                <EventCard key={event.id} id={event.id} title={event.title} date={event.date} imgSrc={event.imgSrc} />
-            ))}
+        {/* Event Tab Navigation */}
+        <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-3 mb-12 max-w-3xl mx-auto">
+          {availableYears.map((year) => {
+            const count = year === 'All'
+              ? sortedEvents.length
+              : sortedEvents.filter(e => extractYear(e.date) === year).length;
+
+            return (
+              <button
+                key={year}
+                type="button"
+                onClick={() => setSelectedYear(year)}
+                className={`px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 ${
+                  selectedYear === year
+                    ? 'bg-[#ffde59] text-black shadow-[0_0_15px_rgba(255,222,89,0.3)]'
+                    : 'bg-[#131412] text-zinc-300 border border-[#26250F] hover:border-zinc-700 hover:text-white'
+                }`}
+              >
+                {year === 'All' ? `All Events (${count})` : `${year} (${count})`}
+              </button>
+            );
+          })}
         </div>
 
-        {/* Additional Idea Component */}
-        <Idea />
-    </section>
-);
+        {/* Standardized Events Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
+          {filteredEvents.map((event) => (
+            <EventCard key={event.id} event={event} />
+          ))}
+        </div>
+      </section>
 
-export default EventSection;
+      {/* Connect CTA */}
+      <Idea />
+    </div>
+  );
+};
+
+export default EventsPage;

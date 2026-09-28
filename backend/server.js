@@ -5,43 +5,66 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import nodemailer from "nodemailer";
 
-
 const app = express();
-app.use(cors()); // allow frontend requests
+app.use(cors());
 app.use(bodyParser.json());
 
-// Create the transporter for email
+// Health check endpoint
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "ok", timestamp: new Date().toISOString() });
+});
+
+// Create Nodemailer transporter
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: process.env.EMAIL_USER, // Your Gmail
-    pass: process.env.EMAIL_PASS, // App password
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
   },
 });
 
 app.post("/contactus", async (req, res) => {
   const { name, email, message } = req.body;
 
-try {
+  // Server-side validation
+  if (!name || typeof name !== "string" || !name.trim()) {
+    return res.status(400).json({ message: "Name is required." });
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!email || typeof email !== "string" || !emailRegex.test(email.trim())) {
+    return res.status(400).json({ message: "A valid email address is required." });
+  }
+
+  if (!message || typeof message !== "string" || !message.trim()) {
+    return res.status(400).json({ message: "Message cannot be empty." });
+  }
+
+  // Verify SMTP credentials presence
+  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+    return res.status(503).json({
+      message: "Email service is temporarily unconfigured on this server. Please contact ecell@abes.ac.in directly.",
+    });
+  }
+
+  try {
     await transporter.sendMail({
-      from: email,
-      to: process.env.EMAIL_USER, // Receiver's email (your Gmail)
-      subject: `New message from ${name}`,
-      text: `
-        Name: ${name}
-        Email: ${email}
-        Message: ${message}
-      `,
+      from: `"${name.trim()}" <${email.trim()}>`,
+      replyTo: email.trim(),
+      to: process.env.EMAIL_USER,
+      subject: `New E-Cell Website Inquiry from ${name.trim()}`,
+      text: `Name: ${name.trim()}\nEmail: ${email.trim()}\n\nMessage:\n${message.trim()}`,
     });
 
-    res.status(200).json({ message: "Message received and email sent!" });
+    return res.status(200).json({ message: "Message received and email sent successfully!" });
   } catch (error) {
-    // console.error("Email send error:", error);
-    res.status(500).json({ message: "Failed to send email." });
+    return res.status(500).json({
+      message: "Failed to dispatch email. Please reach out to ecell@abes.ac.in directly.",
+    });
   }
 });
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
-  // console.log(`Server running on port ${PORT}`);
+  // Server is running
 });

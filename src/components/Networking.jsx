@@ -8,12 +8,13 @@ import Yukta from "../assets/MOU_clg/YUKTA.jpeg";
 import iitd from "../assets/MOU_clg/IIT DELHI.png";
 import vgi from "../assets/MOU_clg/VGI.jpeg";
 import srcasw from "../assets/MOU_clg/SRCASW.jpeg";
+import iiitdLocal from "../assets/iiitD25.webp";
 
-// Dummy data for the cards
+// Partner institution data with local assets
 const networkData = [
   {
     name: "IIIT Delhi",
-    image: "http://iiitd.ac.in/sites/default/files/images/logo/logo.jpg",
+    image: iiitdLocal,
     info: "Premier institute in Delhi with a strong focus on innovation and entrepreneurship.",
   },
   {
@@ -22,17 +23,17 @@ const networkData = [
     info: "A prestigious college of the University of Delhi, nurturing talent and innovation.",
   },
   {
-    name: "MANIT(NIT BHOPAL)",
+    name: "MANIT (NIT Bhopal)",
     image: mnit,
     info: "An institution known for its strong focus on innovation, entrepreneurship, and technical excellence.",
   },
   {
-    name: "IIT DELHI",
+    name: "IIT Delhi",
     image: iitd,
     info: "India's leading institute fostering groundbreaking research and industry partnerships.",
   },
   {
-    name: "E-CELL YUKTA ",
+    name: "E-Cell YUKTA",
     image: Yukta,
     info: "A renowned institution known for academic excellence and technical innovation.",
   },
@@ -49,28 +50,23 @@ const networkData = [
 ];
 
 function Networking() {
-  // Split the data for the two columns
   const firstHalf = networkData.slice(0, Math.ceil(networkData.length / 2));
   const secondHalf = networkData.slice(Math.ceil(networkData.length / 2));
 
-  // Refs for the marquee containers
   const marqueeUpRef = useRef(null);
   const marqueeDownRef = useRef(null);
 
-  // Effect to handle pause on hover
   useEffect(() => {
     const marqueeUp = marqueeUpRef.current;
     const marqueeDown = marqueeDownRef.current;
 
     const handleMouseEnter = (e) => {
-      const container = e.currentTarget;
-      const content = container.querySelector(".marquee-content");
+      const content = e.currentTarget.querySelector(".marquee-content");
       if (content) content.style.animationPlayState = "paused";
     };
 
     const handleMouseLeave = (e) => {
-      const container = e.currentTarget;
-      const content = container.querySelector(".marquee-content");
+      const content = e.currentTarget.querySelector(".marquee-content");
       if (content) content.style.animationPlayState = "running";
     };
 
@@ -97,10 +93,10 @@ function Networking() {
   }, []);
 
   return (
-    <div className="px-4 py-16 text-white bg-black sm:px-8">
-      <div className="flex flex-col items-center gap-10 mx-auto max-w-7xl lg:flex-row">
+    <section className="px-4 sm:px-6 lg:px-8 py-16 text-white bg-black">
+      <div className="flex flex-col items-center gap-10 mx-auto max-w-6xl lg:flex-row">
         {/* Left Section */}
-        <div className="w-full mb-8 lg:w-1/2 lg:mb-0">
+        <div className="w-full lg:w-1/2">
           <div
             className="px-4 py-1 mb-4 rounded-full w-fit"
             style={{
@@ -110,37 +106,33 @@ function Networking() {
             }}
           >
             <Fade cascade>
-              <span className="flex items-center gap-2">
-                <GiPolarStar />
+              <span className="flex items-center gap-2 text-sm font-semibold tracking-wide">
+                <GiPolarStar aria-hidden="true" />
                 NETWORKING
               </span>
             </Fade>
           </div>
-          <h1 className="mb-4 text-4xl font-semibold">
+          <h2 className="mb-4 text-3xl sm:text-4xl font-bold">
             Strategic <span className="text-[#ffde59]">Partnerships</span>
-          </h1>
-          <p className="text-lg text-gray-300">
-            Recognizing the power of synergy, E-Cell has forged strategic
-            partnerships with premier institutes like IIIT Delhi, KIET, RLAC,
-            and IMS Ghaziabad.
+          </h2>
+          <p className="text-base sm:text-lg text-zinc-300 leading-relaxed">
+            Recognizing the power of institutional synergy, E-Cell ABESEC has forged strategic partnerships with premier institutes across India.
           </p>
-          <p className="mt-4 text-lg text-gray-300">
-            These collaborations enable knowledge exchange, resource sharing,
-            and create a vibrant ecosystem for innovation and entrepreneurship
-            across institutions.
+          <p className="mt-4 text-base sm:text-lg text-zinc-300 leading-relaxed">
+            These collaborations enable knowledge exchange, joint conclaves, resource sharing, and build an expansive national ecosystem for student innovation and early-stage ventures.
           </p>
         </div>
 
         {/* Right Section - Vertical Scrolling Content */}
         <div
-          className="relative w-full overflow-hidden lg:w-1/2"
-          style={{ height: "550px" }}
+          className="relative w-full overflow-hidden lg:w-1/2 rounded-2xl"
+          style={{ height: "480px" }}
         >
-          <div className="flex flex-col justify-between h-full gap-4 sm:flex-row">
+          <div className="flex flex-col sm:flex-row justify-between h-full gap-4">
             {/* First Column - Scrolls Up */}
             <div
               ref={marqueeUpRef}
-              className="w-full vertical-marquee-container sm:w-1/2"
+              className="w-full sm:w-1/2 vertical-marquee-container"
             >
               <div className="marquee-content scrolling-up">
                 {[...firstHalf, ...firstHalf].map((network, index) => (
@@ -160,7 +152,7 @@ function Networking() {
             {/* Second Column - Scrolls Down */}
             <div
               ref={marqueeDownRef}
-              className="hidden w-full vertical-marquee-container sm:w-1/2 sm:block"
+              className="hidden sm:block w-1/2 vertical-marquee-container"
             >
               <div className="marquee-content scrolling-down">
                 {[...secondHalf, ...secondHalf].map((network, index) => (
@@ -179,7 +171,7 @@ function Networking() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
