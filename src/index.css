@@ -18,9 +18,15 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
-/* Accessible focus ring for interactive elements */
+/* Remove outline on mouse/touch clicks so elements do not linger in clicked state */
+:focus:not(:focus-visible) {
+    outline: none !important;
+}
+
+/* Accessible focus ring for keyboard navigation only */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,

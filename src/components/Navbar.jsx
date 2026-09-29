@@ -101,10 +101,10 @@ const Navbar = () => {
               to={item.path}
               end={item.path === '/'}
               className={({ isActive }) =>
-                `px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
+                `px-4 py-1.5 rounded-full text-sm font-medium border ${
                   isActive
-                    ? 'text-[#ffde59] bg-[#141412] border border-[#26250F] shadow-sm'
-                    : 'text-zinc-300 hover:text-white hover:bg-white/5'
+                    ? 'text-[#ffde59] bg-[#141412] border-[#26250F]'
+                    : 'text-zinc-300 hover:text-white hover:bg-white/5 border-transparent transition-colors duration-150'
                 }`
               }
             >
@@ -163,10 +163,10 @@ const Navbar = () => {
               end={item.path === '/'}
               onClick={closeNav}
               className={({ isActive }) =>
-                `px-4 py-3 rounded-xl text-base font-medium transition-colors ${
+                `px-4 py-3 rounded-xl text-base font-medium border ${
                   isActive
-                    ? 'text-[#ffde59] bg-[#141412] font-semibold border border-[#26250F]'
-                    : 'text-zinc-300 hover:text-white hover:bg-zinc-900'
+                    ? 'text-[#ffde59] bg-[#141412] border-[#26250F]'
+                    : 'text-zinc-300 hover:text-white hover:bg-zinc-900 border-transparent transition-colors duration-150'
                 }`
               }
             >

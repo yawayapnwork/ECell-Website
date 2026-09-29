@@ -56,11 +56,6 @@ const contactChannels = [
 
 function ContactCard({ item }) {
   const IconComponent = item.icon;
-
-  const handleBlur = (e) => {
-    e.currentTarget.blur();
-  };
-
   return (
     <a
       id={`contact-link-${item.id}`}
@@ -68,19 +63,16 @@ function ContactCard({ item }) {
       target={item.isExternal ? "_blank" : undefined}
       rel={item.isExternal ? "noopener noreferrer" : undefined}
       title={item.value}
-      onClick={handleBlur}
-      onMouseUp={handleBlur}
-      className="group w-full h-[72px] px-4 py-3 rounded-xl bg-black/40 border border-zinc-800 hover:border-[#ffde59]/60 hover:bg-[#ffde59]/5 focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 active:outline-none active:ring-0 transition-colors duration-200 ease-in-out flex items-center gap-3.5 box-border select-none"
-      style={{ outline: "none" }}
+      className="group w-full h-[72px] px-4 py-3 rounded-xl bg-black/40 border border-zinc-800 hover:border-[#ffde59]/60 hover:bg-[#ffde59]/5 transition-colors duration-150 ease-in-out flex items-center gap-3.5 box-border"
     >
-      <div className="w-11 h-11 min-w-[44px] rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-xl text-[#ffde59] flex-shrink-0 transition-colors duration-200 group-hover:border-[#ffde59]/40">
+      <div className="w-11 h-11 min-w-[44px] rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-xl text-[#ffde59] flex-shrink-0 transition-colors duration-150 group-hover:border-[#ffde59]/40">
         <IconComponent aria-hidden="true" />
       </div>
       <div className="min-w-0 flex-1 flex flex-col justify-center">
         <span className="text-xs text-zinc-400 font-medium truncate block leading-tight mb-1">
           {item.label}
         </span>
-        <span className="text-sm font-semibold text-white group-hover:text-[#ffde59] transition-colors duration-200 truncate block leading-snug">
+        <span className="text-sm font-semibold text-white group-hover:text-[#ffde59] transition-colors duration-150 truncate block leading-snug">
           {item.value}
         </span>
       </div>
@@ -227,12 +219,8 @@ function ContactUs() {
               <button
                 id="contact-reset-button"
                 type="button"
-                onClick={(e) => {
-                  e.currentTarget.blur();
-                  setStatus("idle");
-                }}
-                className="mt-4 px-6 h-10 rounded-full bg-[#ffde59] text-black font-semibold text-sm hover:bg-[#ffed59] transition-colors duration-200 ease-in-out focus:outline-none focus-visible:outline-none box-border"
-                style={{ outline: "none" }}
+                onClick={() => setStatus("idle")}
+                className="mt-4 px-6 h-10 rounded-full bg-[#ffde59] text-black font-semibold text-sm hover:bg-[#ffed59] transition-colors duration-150 ease-in-out box-border"
               >
                 Send Another Message
               </button>
@@ -346,8 +334,7 @@ function ContactUs() {
                 id="contact-submit-button"
                 type="submit"
                 disabled={status === "submitting"}
-                className="w-full h-12 rounded-xl bg-[#ffde59] hover:bg-[#ffed59] text-black font-bold text-sm tracking-wide transition-colors duration-200 ease-in-out focus:outline-none focus-visible:outline-none disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 box-border shadow-[0_0_20px_rgba(255,222,89,0.2)]"
-                style={{ outline: "none" }}
+                className="w-full h-12 rounded-xl bg-[#ffde59] hover:bg-[#ffed59] text-black font-bold text-sm tracking-wide transition-colors duration-150 ease-in-out disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 box-border shadow-[0_0_20px_rgba(255,222,89,0.2)]"
               >
                 {status === "submitting" ? (
                   <>
