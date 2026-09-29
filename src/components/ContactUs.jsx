@@ -19,6 +19,67 @@ const customIcon = new L.Icon({
   popupAnchor: [0, -38],
 });
 
+const contactChannels = [
+  {
+    id: "email",
+    label: "Official Email",
+    value: "ecell@abes.ac.in",
+    href: "mailto:ecell@abes.ac.in",
+    icon: AiOutlineMail,
+    isExternal: false,
+  },
+  {
+    id: "instagram",
+    label: "Instagram",
+    value: "@ecell_abesec",
+    href: "https://www.instagram.com/ecell_abesec",
+    icon: AiOutlineInstagram,
+    isExternal: true,
+  },
+  {
+    id: "whatsapp",
+    label: "WhatsApp Channel",
+    value: "Join Community Updates",
+    href: "https://whatsapp.com/channel/0029VaEzRcf84Om7lps30D2F",
+    icon: AiOutlineWhatsApp,
+    isExternal: true,
+  },
+  {
+    id: "youtube",
+    label: "YouTube Channel",
+    value: "@E-CELL_ABESEC",
+    href: "https://www.youtube.com/@E-CELL_ABESEC",
+    icon: AiOutlineYoutube,
+    isExternal: true,
+  },
+];
+
+function ContactCard({ item }) {
+  const IconComponent = item.icon;
+  return (
+    <a
+      id={`contact-link-${item.id}`}
+      href={item.href}
+      target={item.isExternal ? "_blank" : undefined}
+      rel={item.isExternal ? "noopener noreferrer" : undefined}
+      title={item.value}
+      className="group w-full h-[72px] px-4 py-3 rounded-xl bg-black/40 border border-zinc-800 hover:border-[#ffde59]/60 hover:bg-[#ffde59]/5 focus-visible:border-[#ffde59] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ffde59] focus-visible:ring-offset-2 focus-visible:ring-offset-black transition-colors duration-200 ease-in-out flex items-center gap-3.5 box-border"
+    >
+      <div className="w-11 h-11 min-w-[44px] rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-xl text-[#ffde59] flex-shrink-0 transition-colors duration-200 group-hover:border-[#ffde59]/40">
+        <IconComponent aria-hidden="true" />
+      </div>
+      <div className="min-w-0 flex-1 flex flex-col justify-center">
+        <span className="text-xs text-zinc-400 font-medium truncate block leading-tight mb-1">
+          {item.label}
+        </span>
+        <span className="text-sm font-semibold text-white group-hover:text-[#ffde59] transition-colors duration-200 truncate block leading-snug">
+          {item.value}
+        </span>
+      </div>
+    </a>
+  );
+}
+
 function ContactUs() {
   const [formData, setFormData] = useState({
     name: "",
@@ -127,88 +188,22 @@ function ContactUs() {
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16">
         {/* Left Column: Direct Info & Official Links */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="bg-[#131412] border border-[#26250F] rounded-2xl p-6 sm:p-8 shadow-xl">
+          <div className="bg-[#131412] border border-[#26250F] rounded-2xl p-4 sm:p-6 lg:p-8 shadow-xl">
             <h2 className="text-2xl font-bold text-[#ffde59] mb-3">Get In Touch</h2>
             <p className="text-zinc-300 text-sm sm:text-base leading-relaxed mb-6">
               Our student coordinators and faculty mentors are here to support your entrepreneurial ideas and collaboration requests.
             </p>
 
-            <div className="space-y-4">
-              {/* Email */}
-              <a
-                href="mailto:ecell@abes.ac.in"
-                className="flex items-center gap-4 p-3 rounded-xl bg-black/40 border border-zinc-800 hover:border-[#ffde59]/50 hover:bg-[#ffde59]/5 transition-all group"
-              >
-                <div className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center text-xl text-[#ffde59]">
-                  <AiOutlineMail aria-hidden="true" />
-                </div>
-                <div>
-                  <p className="text-xs text-zinc-400 font-medium">Official Email</p>
-                  <p className="text-sm font-semibold text-white group-hover:text-[#ffde59] transition-colors">
-                    ecell@abes.ac.in
-                  </p>
-                </div>
-              </a>
-
-              {/* Instagram */}
-              <a
-                href="https://www.instagram.com/ecell_abesec"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-4 p-3 rounded-xl bg-black/40 border border-zinc-800 hover:border-[#ffde59]/50 hover:bg-[#ffde59]/5 transition-all group"
-              >
-                <div className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center text-xl text-[#ffde59]">
-                  <AiOutlineInstagram aria-hidden="true" />
-                </div>
-                <div>
-                  <p className="text-xs text-zinc-400 font-medium">Instagram</p>
-                  <p className="text-sm font-semibold text-white group-hover:text-[#ffde59] transition-colors">
-                    @ecell_abesec
-                  </p>
-                </div>
-              </a>
-
-              {/* WhatsApp */}
-              <a
-                href="https://whatsapp.com/channel/0029VaEzRcf84Om7lps30D2F"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-4 p-3 rounded-xl bg-black/40 border border-zinc-800 hover:border-[#ffde59]/50 hover:bg-[#ffde59]/5 transition-all group"
-              >
-                <div className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center text-xl text-[#ffde59]">
-                  <AiOutlineWhatsApp aria-hidden="true" />
-                </div>
-                <div>
-                  <p className="text-xs text-zinc-400 font-medium">WhatsApp Channel</p>
-                  <p className="text-sm font-semibold text-white group-hover:text-[#ffde59] transition-colors">
-                    Join Community Updates
-                  </p>
-                </div>
-              </a>
-
-              {/* YouTube */}
-              <a
-                href="https://www.youtube.com/@E-CELL_ABESEC"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-4 p-3 rounded-xl bg-black/40 border border-zinc-800 hover:border-[#ffde59]/50 hover:bg-[#ffde59]/5 transition-all group"
-              >
-                <div className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center text-xl text-[#ffde59]">
-                  <AiOutlineYoutube aria-hidden="true" />
-                </div>
-                <div>
-                  <p className="text-xs text-zinc-400 font-medium">YouTube Channel</p>
-                  <p className="text-sm font-semibold text-white group-hover:text-[#ffde59] transition-colors">
-                    @E-CELL_ABESEC
-                  </p>
-                </div>
-              </a>
+            <div className="flex flex-col gap-3.5">
+              {contactChannels.map((channel) => (
+                <ContactCard key={channel.id} item={channel} />
+              ))}
             </div>
           </div>
         </div>
 
         {/* Right Column: Contact Form */}
-        <div className="lg:col-span-7 bg-[#131412] border border-[#26250F] p-6 sm:p-8 rounded-2xl shadow-xl">
+        <div className="lg:col-span-7 bg-[#131412] border border-[#26250F] p-4 sm:p-6 lg:p-8 rounded-2xl shadow-xl">
           <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">Send Us a Direct Message</h2>
           <p className="text-zinc-400 text-xs sm:text-sm mb-6">
             Fill in your details below and we will get back to you promptly.
@@ -222,9 +217,10 @@ function ContactUs() {
                 {statusMessage}
               </p>
               <button
+                id="contact-reset-button"
                 type="button"
                 onClick={() => setStatus("idle")}
-                className="mt-4 px-6 py-2.5 rounded-full bg-[#ffde59] text-black font-semibold text-sm hover:bg-[#ffed59] transition-colors"
+                className="mt-4 px-6 h-10 rounded-full bg-[#ffde59] text-black font-semibold text-sm hover:bg-[#ffed59] transition-colors duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ffde59] focus-visible:ring-offset-2 focus-visible:ring-offset-black box-border"
               >
                 Send Another Message
               </button>
@@ -261,7 +257,7 @@ function ContactUs() {
                   placeholder="e.g. Ashish Kumar"
                   aria-invalid={!!formErrors.name}
                   aria-describedby={formErrors.name ? "name-error" : undefined}
-                  className={`w-full p-3 rounded-xl bg-black/50 text-white border text-sm transition-colors focus:outline-none ${
+                  className={`w-full p-3 rounded-xl bg-black/50 text-white border text-sm transition-colors duration-200 ease-in-out focus:outline-none ${
                     formErrors.name
                       ? "border-red-500 focus:border-red-400"
                       : "border-zinc-800 focus:border-[#ffde59]"
@@ -291,7 +287,7 @@ function ContactUs() {
                   placeholder="e.g. yourname@gmail.com"
                   aria-invalid={!!formErrors.email}
                   aria-describedby={formErrors.email ? "email-error" : undefined}
-                  className={`w-full p-3 rounded-xl bg-black/50 text-white border text-sm transition-colors focus:outline-none ${
+                  className={`w-full p-3 rounded-xl bg-black/50 text-white border text-sm transition-colors duration-200 ease-in-out focus:outline-none ${
                     formErrors.email
                       ? "border-red-500 focus:border-red-400"
                       : "border-zinc-800 focus:border-[#ffde59]"
@@ -321,7 +317,7 @@ function ContactUs() {
                   placeholder="How can we help? Share your inquiry or collaboration idea..."
                   aria-invalid={!!formErrors.message}
                   aria-describedby={formErrors.message ? "message-error" : undefined}
-                  className={`w-full p-3 rounded-xl bg-black/50 text-white border text-sm transition-colors focus:outline-none resize-y ${
+                  className={`w-full p-3 rounded-xl bg-black/50 text-white border text-sm transition-colors duration-200 ease-in-out focus:outline-none resize-y ${
                     formErrors.message
                       ? "border-red-500 focus:border-red-400"
                       : "border-zinc-800 focus:border-[#ffde59]"
@@ -335,13 +331,14 @@ function ContactUs() {
               </div>
 
               <button
+                id="contact-submit-button"
                 type="submit"
                 disabled={status === "submitting"}
-                className="w-full py-3.5 rounded-xl bg-[#ffde59] hover:bg-[#ffed59] text-black font-bold text-sm tracking-wide transition-all shadow-[0_0_20px_rgba(255,222,89,0.2)] disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full h-12 rounded-xl bg-[#ffde59] hover:bg-[#ffed59] text-black font-bold text-sm tracking-wide transition-colors duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ffde59] focus-visible:ring-offset-2 focus-visible:ring-offset-black disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 box-border shadow-[0_0_20px_rgba(255,222,89,0.2)]"
               >
                 {status === "submitting" ? (
                   <>
-                    <FiLoader className="w-4 h-4 animate-spin" aria-hidden="true" />
+                    <FiLoader className="w-4 h-4 animate-spin flex-shrink-0" aria-hidden="true" />
                     <span>Sending Message...</span>
                   </>
                 ) : (
@@ -354,7 +351,7 @@ function ContactUs() {
       </div>
 
       {/* Interactive Campus Map Section */}
-      <div className="max-w-6xl mx-auto bg-[#131412] border border-[#26250F] p-6 sm:p-8 rounded-2xl shadow-xl">
+      <div className="max-w-6xl mx-auto bg-[#131412] border border-[#26250F] p-4 sm:p-6 lg:p-8 rounded-2xl shadow-xl">
         <div className="mb-4">
           <h2 className="text-xl font-bold text-white">Our Location</h2>
           <p className="text-zinc-400 text-sm">

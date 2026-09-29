@@ -8,7 +8,7 @@ function Footer() {
     return (
         <div>
             <div className="bg-black text-white py-8 px-4">
-                <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
                     
                     <div>
                         <h3 className="text-lg font-bold mb-4">Page</h3>
@@ -28,19 +28,25 @@ function Footer() {
                         </NavLink>
                         <p className="mb-4">Experience Entrepreneurship with us.</p>
                         <div className="flex space-x-2">
-                            <a href="https://www.linkedin.com/company/ecell-abes-ec/mycompany/" target="_blank" className="text-[#ffde59] flex items-center justify-center w-10 h-10 rounded-full bg-gray-800 border-2 border-gray-800 transition duration-300 ease-in-out hover:bg-[#ffde59] hover:text-white hover:border-[#ffde59]"><PiLinkedinLogoBold className="text-2xl" /></a>
                             <a
-                                href="https://www.instagram.com/ecell_abesec/" target="_blank"
-                                className="text-[#ffde59] flex items-center justify-center w-10 h-10 rounded-full bg-gray-800 border-2 border-gray-800 transition duration-300 ease-in-out hover:bg-[#ffde59] hover:text-white hover:border-[#ffde59]"
+                                href="https://www.linkedin.com/company/ecell-abes-ec/mycompany/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="LinkedIn"
+                                className="text-[#ffde59] flex items-center justify-center w-10 h-10 rounded-full bg-gray-800 border-2 border-gray-800 transition-colors duration-200 ease-in-out hover:bg-[#ffde59] hover:text-black hover:border-[#ffde59]"
+                            >
+                                <PiLinkedinLogoBold className="text-2xl" />
+                            </a>
+                            <a
+                                href="https://www.instagram.com/ecell_abesec/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Instagram"
+                                className="text-[#ffde59] flex items-center justify-center w-10 h-10 rounded-full bg-gray-800 border-2 border-gray-800 transition-colors duration-200 ease-in-out hover:bg-[#ffde59] hover:text-black hover:border-[#ffde59]"
                             >
                                 <FaInstagram className="text-2xl" />
                             </a>
-
                         </div>
-                    </div>
-
-                    <div className='Footerdiv'>
-                        {/* Future content (e.g., newsletter subscription) can be added here */}
                     </div>
                 </div>
                 <hr style={{ width: '20rem', margin: '2rem auto 10px auto' }} />

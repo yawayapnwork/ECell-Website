@@ -232,26 +232,3 @@ main {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-
-/* ========== FOOTER ========== */
-.Footerdiv {
-  background-image: url('/inif image.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  width: 100%;
-}
-
-@media (max-width: 768px) and (min-width: 480px) {
-  .Footerdiv {
-    height: 150px;
-    margin-left: 0;
-  }
-}
-
-@media (max-width: 480px) {
-  .Footerdiv {
-    height: 100px;
-    margin-left: 0;
-  }
-}
