@@ -129,7 +129,8 @@ function ContactUs() {
     setStatusMessage("");
 
     try {
-      const response = await fetch("/contactus", {
+      const apiBaseUrl = (import.meta.env.VITE_API_URL || "").replace(/\/+$/, "");
+      const response = await fetch(`${apiBaseUrl}/contactus`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
