@@ -129,7 +129,13 @@ function ContactUs() {
     setStatusMessage("");
 
     try {
-      const apiBaseUrl = (import.meta.env.VITE_API_URL || "").replace(/\/+$/, "");
+      const rawApiUrl = import.meta.env.VITE_API_URL;
+      if (import.meta.env.PROD && !rawApiUrl) {
+        console.warn(
+          "[ContactUs] Warning: VITE_API_URL is not set at build time. Form submission may fail if backend is hosted on a different origin."
+        );
+      }
+      const apiBaseUrl = (rawApiUrl || "").replace(/\/+$/, "");
       const response = await fetch(`${apiBaseUrl}/contactus`, {
         method: "POST",
         headers: {
@@ -159,7 +165,7 @@ function ContactUs() {
     } catch (err) {
       setStatus("error");
       setStatusMessage(
-        "Network or server connection issue. Please contact us directly at ecell@abes.ac.in."
+        "Network or server connection issue. Please check your connection and try again."
       );
     }
   };

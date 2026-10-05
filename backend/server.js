@@ -8,12 +8,14 @@ import { Resend } from "resend";
 const app = express();
 
 // Allowed origins for CORS (supporting local development, environment URLs, and deployed Vercel frontends)
+const cleanOrigin = (url) => (url ? url.trim().replace(/\/+$/, "") : null);
+
 const configuredOrigins = [
   "http://localhost:5173",
   "http://localhost:3000",
   "http://127.0.0.1:5173",
-  process.env.FRONTEND_URL,
-  process.env.CLIENT_URL,
+  cleanOrigin(process.env.FRONTEND_URL),
+  cleanOrigin(process.env.CLIENT_URL),
 ].filter(Boolean);
 
 app.use(
@@ -25,19 +27,23 @@ app.use(
       let isAllowed = false;
       try {
         const parsedUrl = new URL(origin);
+        const originClean = cleanOrigin(origin);
         isAllowed =
-          configuredOrigins.includes(origin) ||
+          configuredOrigins.includes(originClean) ||
           /(^|\.)vercel\.app$/.test(parsedUrl.hostname) ||
           parsedUrl.hostname === "ecell-abes.ac.in" ||
-          parsedUrl.hostname === "www.ecell-abes.ac.in";
+          parsedUrl.hostname === "www.ecell-abes.ac.in" ||
+          parsedUrl.hostname === "localhost" ||
+          parsedUrl.hostname === "127.0.0.1";
       } catch {
-        isAllowed = configuredOrigins.includes(origin);
+        isAllowed = configuredOrigins.includes(cleanOrigin(origin));
       }
 
       if (isAllowed) {
         callback(null, true);
       } else {
-        callback(new Error(`Origin ${origin} not allowed by CORS`));
+        console.warn(`[CORS] Blocked request from unauthorized origin: ${origin}`);
+        callback(null, false);
       }
     },
     methods: ["GET", "POST", "OPTIONS"],
@@ -47,10 +53,22 @@ app.use(
 
 app.use(bodyParser.json());
 
-// Initialize Resend SDK using environment variable
-const resend = process.env.RESEND_API_KEY
-  ? new Resend(process.env.RESEND_API_KEY)
-  : null;
+// Safe startup diagnostics
+console.log("Starting E-Cell Backend Service...");
+console.log("Startup Environment Check:", {
+  RESEND_API_KEY_configured: Boolean(process.env.RESEND_API_KEY),
+  RESEND_FROM_EMAIL_configured: Boolean(process.env.RESEND_FROM_EMAIL),
+  CONTACT_RECEIVER_EMAIL_configured: Boolean(process.env.CONTACT_RECEIVER_EMAIL),
+  FRONTEND_URL_configured: Boolean(process.env.FRONTEND_URL),
+});
+
+// Helper to get initialized Resend client
+const getResendClient = () => {
+  if (!process.env.RESEND_API_KEY) {
+    return null;
+  }
+  return new Resend(process.env.RESEND_API_KEY);
+};
 
 // Health check endpoint
 app.get("/health", (req, res) => {
@@ -59,7 +77,14 @@ app.get("/health", (req, res) => {
 
 // Contact Us form submission endpoint
 app.post("/contactus", async (req, res) => {
-  const { name, email, message } = req.body;
+  console.log("Contact form submission received");
+  console.log("Contact email configuration:", {
+    hasApiKey: Boolean(process.env.RESEND_API_KEY),
+    hasFrom: Boolean(process.env.RESEND_FROM_EMAIL),
+    hasReceiver: Boolean(process.env.CONTACT_RECEIVER_EMAIL),
+  });
+
+  const { name, email, message } = req.body || {};
 
   // Server-side validation
   if (!name || typeof name !== "string" || !name.trim()) {
@@ -76,18 +101,29 @@ app.post("/contactus", async (req, res) => {
   }
 
   // Verify Resend configuration presence
-  if (!process.env.RESEND_API_KEY || !resend) {
+  const resend = getResendClient();
+  if (!resend) {
     console.error("Email service error: RESEND_API_KEY is not configured.");
     return res.status(503).json({
-      message: "Email service is temporarily unconfigured on this server. Please contact ecell@abes.ac.in directly.",
+      message: "Email service is temporarily unconfigured on this server. Please try again later.",
+    });
+  }
+
+  const toEmail = process.env.CONTACT_RECEIVER_EMAIL
+    ? process.env.CONTACT_RECEIVER_EMAIL.trim()
+    : null;
+
+  if (!toEmail) {
+    console.error("Email service error: CONTACT_RECEIVER_EMAIL is not configured.");
+    return res.status(503).json({
+      message: "Email receiver is not configured on this server. Please try again later.",
     });
   }
 
   const fromEmail = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
-  const toEmail = process.env.CONTACT_RECEIVER_EMAIL || "ecell@abes.ac.in";
 
   try {
-    const { error } = await resend.emails.send({
+    const { data, error } = await resend.emails.send({
       from: fromEmail,
       to: [toEmail],
       replyTo: email.trim(),
@@ -96,19 +132,31 @@ app.post("/contactus", async (req, res) => {
     });
 
     if (error) {
-      console.error("Resend error response:", error.message || error);
+      console.error("Resend delivery failed:", {
+        name: error.name || "Error",
+        message: error.message || "Unknown error",
+        statusCode: error.statusCode || 500,
+      });
       return res.status(500).json({
-        message: "Failed to dispatch email. Please reach out to ecell@abes.ac.in directly.",
+        message: "Failed to dispatch email. Please try again later.",
       });
     }
+
+    console.log("Resend email accepted successfully:", {
+      id: data?.id,
+    });
 
     return res.status(200).json({
       message: "Your message has been received! Our team will reach out soon.",
     });
   } catch (err) {
-    console.error("Unexpected error dispatching email via Resend:", err.message || err);
+    console.error("Unexpected error during email dispatch:", {
+      name: err.name || "Error",
+      message: err.message,
+      statusCode: err.statusCode || 500,
+    });
     return res.status(500).json({
-      message: "Failed to dispatch email. Please reach out to ecell@abes.ac.in directly.",
+      message: "Failed to dispatch email. Please try again later.",
     });
   }
 });
