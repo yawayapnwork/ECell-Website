@@ -47,11 +47,20 @@ app.use(
       }
     },
     methods: ["GET", "POST", "OPTIONS"],
-    allowedHeaders: ["Content-Type"],
+    allowedHeaders: ["Content-Type", "Accept", "Origin", "X-Requested-With"],
+    optionsSuccessStatus: 200,
   })
 );
 
 app.use(bodyParser.json());
+
+// JSON parsing error handler to prevent HTML stacktrace responses
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
+    return res.status(400).json({ message: "Invalid JSON payload." });
+  }
+  next(err);
+});
 
 // Safe startup diagnostics
 console.log("Starting E-Cell Backend Service...");
@@ -75,8 +84,8 @@ app.get("/health", (req, res) => {
   res.status(200).json({ status: "ok", timestamp: new Date().toISOString() });
 });
 
-// Contact Us form submission endpoint
-app.post("/contactus", async (req, res) => {
+// Contact Us form submission endpoint (supports /contactus, /api/contact, and /contact)
+app.post(["/contactus", "/api/contact", "/contact"], async (req, res) => {
   console.log("Contact form submission received");
   console.log("Contact email configuration:", {
     hasApiKey: Boolean(process.env.RESEND_API_KEY),
@@ -137,8 +146,14 @@ app.post("/contactus", async (req, res) => {
         message: error.message || "Unknown error",
         statusCode: error.statusCode || 500,
       });
-      return res.status(500).json({
-        message: "Failed to dispatch email. Please try again later.",
+      const statusCode =
+        typeof error.statusCode === "number" &&
+        error.statusCode >= 400 &&
+        error.statusCode < 600
+          ? error.statusCode
+          : 500;
+      return res.status(statusCode).json({
+        message: error.message || "Failed to dispatch email. Please try again later.",
       });
     }
 
