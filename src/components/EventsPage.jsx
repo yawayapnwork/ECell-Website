@@ -101,7 +101,7 @@ const EventsPage = () => {
               FLAGSHIP INITIATIVES &amp; EXPERIENCES
             </p>
           </Fade>
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight mb-4">
+          <h1 className="text-2xl min-[360px]:text-3xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight mb-4">
             Events at <span className="text-[#ffed59]">E-Cell ABESEC</span>
           </h1>
           <p className="text-zinc-400 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
@@ -110,7 +110,7 @@ const EventsPage = () => {
         </div>
 
         {/* Event Tab Navigation */}
-        <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-3 mb-12 max-w-3xl mx-auto">
+        <div className="flex flex-wrap justify-center items-center gap-1.5 sm:gap-2.5 mb-10 sm:mb-12 max-w-3xl mx-auto">
           {availableYears.map((year) => {
             const count = year === 'All'
               ? sortedEvents.length
@@ -121,7 +121,7 @@ const EventsPage = () => {
                 key={year}
                 type="button"
                 onClick={() => setSelectedYear(year)}
-                className={`px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 ${
+                className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 ${
                   selectedYear === year
                     ? 'bg-[#ffde59] text-black shadow-[0_0_15px_rgba(255,222,89,0.3)]'
                     : 'bg-[#131412] text-zinc-300 border border-[#26250F] hover:border-zinc-700 hover:text-white'
@@ -133,8 +133,8 @@ const EventsPage = () => {
           })}
         </div>
 
-        {/* Standardized Events Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
+        {/* Standardized Events Grid: 1 col on mobile, 2 col on tablet, 3 col on desktop */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
           {filteredEvents.map((event) => (
             <EventCard key={event.id} event={event} />
           ))}

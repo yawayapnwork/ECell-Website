@@ -130,19 +130,19 @@ const Volunteers = ({ currentTeam }) => {
             VOLUNTEERS
           </p>
         </Fade>
-        <h2 className="text-3xl sm:text-5xl font-bold">
+        <h2 className="text-2xl min-[360px]:text-3xl sm:text-5xl font-bold">
           Team <span className="text-[#ffed59]">{currentTeam}</span> Volunteers
         </h2>
-        <p className="text-zinc-400 text-sm sm:text-base mt-2 max-w-xl mx-auto">
+        <p className="text-zinc-400 text-xs sm:text-sm md:text-base mt-2 max-w-xl mx-auto">
           The passionate minds driving operations, events, outreach, and technical infrastructure.
         </p>
       </div>
 
       {/* Role Filter Buttons */}
-      <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 max-w-4xl mx-auto">
+      <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2.5 mb-8 max-w-4xl mx-auto">
         <button
           onClick={() => setSelectedRole(null)}
-          className={`px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 ${
+          className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 ${
             selectedRole === null
               ? "bg-[#ffde59] text-black shadow-[0_0_15px_rgba(255,222,89,0.3)]"
               : "bg-[#131412] text-zinc-300 border border-[#26250F] hover:border-zinc-600 hover:text-white"
@@ -157,7 +157,7 @@ const Volunteers = ({ currentTeam }) => {
             <button
               key={index}
               onClick={() => setSelectedRole(role)}
-              className={`px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 ${
+              className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 ${
                 selectedRole === role
                   ? "bg-[#ffde59] text-black shadow-[0_0_15px_rgba(255,222,89,0.3)]"
                   : "bg-[#131412] text-zinc-300 border border-[#26250F] hover:border-zinc-600 hover:text-white"

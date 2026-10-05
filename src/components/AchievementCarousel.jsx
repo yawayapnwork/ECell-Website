@@ -18,21 +18,22 @@ const AchievementCarousel = ({images}) => {
   };
 
   return (
-   <div className="flex justify-center items-center">
-  <div className="w-full max-w-4xl">
-    <Slider {...settings}>
-      {images.map((src, index) => (
-        <div key={index} className="flex justify-center items-center">
-          <img
-            src={src}
-            alt=""
-            className="rounded-lg w-full h-[25rem] object-cover"
-          />
-        </div>
-      ))}
-    </Slider>
-  </div>
-</div>
+    <div className="flex justify-center items-center w-full">
+      <div className="w-full max-w-4xl overflow-hidden rounded-xl">
+        <Slider {...settings}>
+          {images.map((src, index) => (
+            <div key={index} className="flex justify-center items-center">
+              <img
+                src={src}
+                alt=""
+                className="rounded-xl w-full h-56 sm:h-72 md:h-80 lg:h-[24rem] xl:h-[26rem] object-cover"
+                loading="lazy"
+              />
+            </div>
+          ))}
+        </Slider>
+      </div>
+    </div>
   );
 };
 

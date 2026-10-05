@@ -2,7 +2,7 @@ import { FaLinkedin, FaInstagram, FaYoutube, FaTwitter, FaFacebook } from "react
 
 export default function SocialSidebar() {
   return (
-    <div className="fixed top-1/3 right-4 z-50">
+    <div className="hidden lg:flex fixed top-1/3 right-4 z-40">
       
       <div className="flex flex-col items-center gap-6 px-3 py-6 rounded-2xl 
                       bg-white/10 backdrop-blur-lg shadow-lg border border-white/20">

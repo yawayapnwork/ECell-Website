@@ -31,13 +31,13 @@ function Teams() {
               THE LEADERSHIP &amp; DRIVING FORCE
             </p>
 
-            <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-3">
+            <h1 className="text-2xl min-[360px]:text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-3">
               <span className="text-[#ffde59]">
                 {sectionData.hero.title1.split(" ")[0]}
               </span>{" "}
               {sectionData.hero.title1.split(" ").slice(1).join(" ")}
             </h1>
-            <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4">
+            <h2 className="text-2xl min-[360px]:text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4">
               {sectionData.hero.title2.split("Environment")[0]}{" "}
               <span className="text-[#ffde59]">Environment</span>
             </h2>
@@ -63,10 +63,10 @@ function Teams() {
         />
 
         {/* Team Year Selection Navbar */}
-        <div className="flex justify-center items-center gap-3 mb-10">
+        <div className="flex flex-wrap justify-center items-center gap-2.5 sm:gap-3 mb-10">
           <button
             type="button"
-            className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 ${
+            className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 ${
               currentTeam === "2024-2025"
                 ? "bg-[#ffde59] text-black shadow-[0_0_20px_rgba(255,222,89,0.3)]"
                 : "bg-[#131412] text-zinc-300 border border-[#26250F] hover:border-zinc-600 hover:text-white"
@@ -77,7 +77,7 @@ function Teams() {
           </button>
           <button
             type="button"
-            className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 ${
+            className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 ${
               currentTeam === "2025-2026"
                 ? "bg-[#ffde59] text-black shadow-[0_0_20px_rgba(255,222,89,0.3)]"
                 : "bg-[#131412] text-zinc-300 border border-[#26250F] hover:border-zinc-600 hover:text-white"
@@ -154,7 +154,7 @@ export const SectionHeader = ({ badge, title }) => {
           </p>
         </Fade>
       )}
-      <h2 className="text-3xl sm:text-5xl font-bold tracking-tight">
+      <h2 className="text-2xl min-[360px]:text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
         {title.split(" ").map((word, index) =>
           word === "Team" || word === "Mentors" || word === "Alumni" ? (
             <span key={index} className="text-[#ffde59]">
@@ -171,16 +171,16 @@ export const SectionHeader = ({ badge, title }) => {
 
 export const TeamMemberCard = ({ member }) => {
   return (
-    <div className="bg-[#131412] border border-[#26250F] rounded-2xl p-6 sm:p-8 flex flex-col justify-between items-center text-center shadow-lg hover:border-[#ffde59]/50 transition-all duration-300">
+    <div className="bg-[#131412] border border-[#26250F] rounded-2xl p-5 sm:p-6 md:p-8 flex flex-col justify-between items-center text-center shadow-lg hover:border-[#ffde59]/50 transition-all duration-300">
       <div className="flex flex-col items-center">
         <img
           src={member.image || "/placeholder.svg"}
           alt={member.name}
-          className="mb-4 rounded-full w-40 h-40 sm:w-44 sm:h-44 object-cover border-2 border-[#ffde59]/40 aspect-square shadow-md"
+          className="mb-4 rounded-full w-36 h-36 sm:w-40 sm:h-40 md:w-44 md:h-44 object-cover border-2 border-[#ffde59]/40 aspect-square shadow-md"
           loading="lazy"
         />
-        <h3 className="text-xl sm:text-2xl font-bold text-white">{member.name}</h3>
-        <p className="text-[#ffde59] text-sm font-semibold mt-1">{member.role}</p>
+        <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white">{member.name}</h3>
+        <p className="text-[#ffde59] text-xs sm:text-sm font-semibold mt-1">{member.role}</p>
         {member.description && (
           <p className="text-zinc-400 mt-3 text-xs sm:text-sm leading-relaxed max-w-xs">
             {member.description}

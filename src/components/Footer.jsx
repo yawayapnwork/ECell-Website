@@ -121,7 +121,7 @@ function Footer() {
                   onChange={(e) => setNewsletterEmail(e.target.value)}
                   placeholder="Enter your email"
                   required
-                  className="w-full bg-transparent px-4 py-2 text-sm text-white placeholder-zinc-500 focus:outline-none rounded-full"
+                  className="w-full min-w-0 bg-transparent px-3.5 sm:px-4 py-2 text-xs sm:text-sm text-white placeholder-zinc-500 focus:outline-none rounded-full"
                 />
                 <button
                   type="submit"
@@ -143,7 +143,7 @@ function Footer() {
               <p className="text-zinc-400 text-xs sm:text-sm font-medium mb-3">
                 Get connected with us on social networks:
               </p>
-              <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
                 {socialLinks.map((item) => {
                   const Icon = item.icon;
                   return (
@@ -153,9 +153,9 @@ function Footer() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={item.name}
-                      className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#1a1a1a] border border-zinc-800 text-[#ffde59] hover:bg-[#ffde59] hover:text-black hover:border-[#ffde59] transition-colors duration-150 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ffde59]"
+                      className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-full bg-[#1a1a1a] border border-zinc-800 text-[#ffde59] hover:bg-[#ffde59] hover:text-black hover:border-[#ffde59] transition-colors duration-150 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ffde59]"
                     >
-                      <Icon className="w-4 h-4" />
+                      <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     </a>
                   );
                 })}

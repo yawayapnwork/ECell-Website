@@ -101,22 +101,19 @@ function Networking() {
               NETWORKING
             </p>
           </Fade>
-          <h2 className="mb-4 text-3xl sm:text-4xl font-bold">
+          <h2 className="mb-4 text-2xl min-[360px]:text-3xl sm:text-4xl font-bold">
             Strategic <span className="text-[#ffde59]">Partnerships</span>
           </h2>
-          <p className="text-base sm:text-lg text-zinc-300 leading-relaxed">
+          <p className="text-sm sm:text-base md:text-lg text-zinc-300 leading-relaxed">
             Recognizing the power of institutional synergy, E-Cell ABESEC has forged strategic partnerships with premier institutes across India.
           </p>
-          <p className="mt-4 text-base sm:text-lg text-zinc-300 leading-relaxed">
+          <p className="mt-4 text-sm sm:text-base md:text-lg text-zinc-300 leading-relaxed">
             These collaborations enable knowledge exchange, joint conclaves, resource sharing, and build an expansive national ecosystem for student innovation and early-stage ventures.
           </p>
         </div>
 
         {/* Right Section - Vertical Scrolling Content */}
-        <div
-          className="relative w-full overflow-hidden lg:w-1/2 rounded-2xl"
-          style={{ height: "480px" }}
-        >
+        <div className="relative w-full overflow-hidden lg:w-1/2 rounded-2xl h-[360px] sm:h-[420px] md:h-[480px]">
           <div className="flex flex-col sm:flex-row justify-between h-full gap-4">
             {/* First Column - Scrolls Up */}
             <div

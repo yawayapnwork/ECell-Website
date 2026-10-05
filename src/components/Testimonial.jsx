@@ -58,20 +58,20 @@ const testimonialData = [
 
 const ReviewCard = ({ img, name, username, body }) => {
   return (
-    <div className="bg-[#141412] rounded-xl p-5 sm:p-6 flex flex-col justify-between text-left min-h-[220px] w-[300px] sm:w-[360px] border border-[#26250F] hover:border-[#ffde59] mx-3 my-2 shadow-lg transition-colors flex-shrink-0">
-      <p className="text-zinc-300 text-sm leading-relaxed mb-4">{body}</p>
+    <div className="bg-[#141412] rounded-xl p-4 sm:p-6 flex flex-col justify-between text-left min-h-[200px] sm:min-h-[220px] w-[270px] min-[380px]:w-[310px] sm:w-[360px] border border-[#26250F] hover:border-[#ffde59] mx-2 sm:mx-3 my-2 shadow-lg transition-colors flex-shrink-0">
+      <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed mb-4">{body}</p>
       <div className="flex items-center space-x-3 mt-auto pt-2 border-t border-zinc-900">
         <img
           src={img || "/placeholder.svg"}
           alt={name}
-          className="w-11 h-11 rounded-full object-cover border border-[#ffde59]"
+          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full object-cover border border-[#ffde59] flex-shrink-0"
           width="44"
           height="44"
           loading="lazy"
         />
-        <div>
-          <h3 className="text-sm font-semibold text-[#ffde59]">{name}</h3>
-          <p className="text-xs text-zinc-400">{username}</p>
+        <div className="min-w-0">
+          <h3 className="text-xs sm:text-sm font-semibold text-[#ffde59] truncate">{name}</h3>
+          <p className="text-[11px] sm:text-xs text-zinc-400 truncate">{username}</p>
         </div>
       </div>
     </div>
@@ -86,11 +86,11 @@ function Testimonial() {
   return (
     <section className="w-full bg-black py-16 relative overflow-hidden">
       {/* Testimonials Section Header */}
-      <div className="flex flex-col items-center mb-12 relative z-0 px-4 text-center">
+      <div className="flex flex-col items-center mb-10 sm:mb-12 relative z-0 px-4 text-center">
         <p className="text-[#ffde59] text-xs sm:text-sm font-semibold uppercase tracking-wider mb-2">
           TESTIMONIALS
         </p>
-        <h2 className="text-3xl sm:text-5xl font-semibold text-center text-white">
+        <h2 className="text-2xl min-[360px]:text-3xl sm:text-5xl font-semibold text-center text-white">
           Voices of <span className="text-[#ffde59]">Our Community</span>
         </h2>
       </div>
@@ -128,8 +128,8 @@ function Testimonial() {
         </div>
 
         {/* Gradient fade overlays */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-black to-transparent z-10"></div>
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-black to-transparent z-10"></div>
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-6 sm:w-12 md:w-16 bg-gradient-to-r from-black to-transparent z-10"></div>
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-6 sm:w-12 md:w-16 bg-gradient-to-l from-black to-transparent z-10"></div>
       </div>
     </section>
   );

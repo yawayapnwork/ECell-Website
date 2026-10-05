@@ -111,17 +111,17 @@ const EventDetail = () => {
                 FEATURED EVENT
               </p>
 
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-white leading-tight mb-3">
+              <h1 className="text-xl min-[360px]:text-2xl sm:text-3xl font-extrabold text-white leading-tight mb-3">
                 {event.title}
               </h1>
 
-              <div className="flex items-center text-zinc-400 text-sm mb-4">
-                <Calendar className="h-4 w-4 mr-2 text-[#ffde59]" />
+              <div className="flex items-center text-zinc-400 text-xs sm:text-sm mb-4">
+                <Calendar className="h-4 w-4 mr-2 text-[#ffde59] flex-shrink-0" />
                 <span>{event.date || "Date TBA"}</span>
               </div>
 
               {descriptionSections.about && (
-                <p className="text-zinc-400 text-sm line-clamp-4 leading-relaxed mb-6">
+                <p className="text-zinc-400 text-xs sm:text-sm line-clamp-4 leading-relaxed mb-6">
                   {descriptionSections.about}
                 </p>
               )}
@@ -151,7 +151,7 @@ const EventDetail = () => {
 
           {/* Right Block: Image / Carousel */}
           <div
-            className={`lg:col-span-7 bg-[#131412] border border-[#26250F] rounded-2xl overflow-hidden shadow-xl min-h-[300px] flex items-center justify-center ${
+            className={`lg:col-span-7 bg-[#131412] border border-[#26250F] rounded-2xl overflow-hidden shadow-xl min-h-[220px] sm:min-h-[280px] md:min-h-[340px] lg:min-h-[380px] flex items-center justify-center ${
               isLoaded ? "animate-fadeIn" : "opacity-0"
             }`}
           >
@@ -184,7 +184,7 @@ const EventDetail = () => {
                 key={tab.id}
                 type="button"
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-5 sm:px-8 py-4 text-xs sm:text-sm font-semibold whitespace-nowrap transition-colors duration-200 border-b-2 ${
+                className={`px-4 sm:px-6 md:px-8 py-3 sm:py-4 text-xs sm:text-sm font-semibold whitespace-nowrap transition-colors duration-200 border-b-2 ${
                   activeTab === tab.id
                     ? "text-[#ffde59] border-[#ffde59] bg-white/5"
                     : "text-zinc-400 border-transparent hover:text-white hover:bg-zinc-900/50"
@@ -196,7 +196,7 @@ const EventDetail = () => {
           </div>
 
           {/* Tab Content Display */}
-          <div className="p-6 sm:p-8 md:p-10">
+          <div className="p-5 sm:p-7 md:p-10">
             {activeTab === "about" && (
               <div className="animate-fadeIn">
                 <h2 className="text-xl sm:text-2xl font-bold text-[#ffde59] mb-4">

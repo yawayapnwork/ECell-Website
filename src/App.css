@@ -1,9 +1,9 @@
 /* ========== GLOBAL STYLES ========== */
 
-.main,
 main {
-  width: min(1200px, 90vw);
-  margin: auto;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 /* ========== CENTER DIAMOND ========== */

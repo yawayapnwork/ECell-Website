@@ -9,14 +9,33 @@ import {
   AiOutlineWhatsApp,
   AiOutlineYoutube,
 } from "react-icons/ai";
-import { FiCheckCircle, FiAlertCircle, FiLoader } from "react-icons/fi";
+import {
+  FiCheckCircle,
+  FiAlertCircle,
+  FiLoader,
+  FiMapPin,
+  FiNavigation,
+} from "react-icons/fi";
+import abesCampusPhoto from "../assets/abes-campus.webp";
 
-// Custom Leaflet marker icon
-const customIcon = new L.Icon({
-  iconUrl: "https://cdn-icons-png.flaticon.com/128/684/684908.png",
-  iconSize: [32, 42],
-  iconAnchor: [16, 42],
-  popupAnchor: [0, -38],
+// Custom Leaflet marker icon matching E-Cell yellow + black theme
+const customMarkerIcon = L.divIcon({
+  className: "abes-custom-pin",
+  html: `
+    <div style="position: relative; width: 36px; height: 46px; display: flex; align-items: center; justify-content: center; cursor: pointer; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.6));">
+      <svg width="36" height="46" viewBox="0 0 36 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Pin Body -->
+        <path d="M18 0C8.05887 0 0 8.05887 0 18C0 30 15.5 44.5 18 46C20.5 44.5 36 30 36 18C36 8.05887 27.9411 0 18 0Z" fill="#ffde59"/>
+        <!-- Inner Accent Ring -->
+        <circle cx="18" cy="18" r="9.5" fill="#131412"/>
+        <!-- Center Core Dot -->
+        <circle cx="18" cy="18" r="4.5" fill="#ffde59"/>
+      </svg>
+    </div>
+  `,
+  iconSize: [36, 46],
+  iconAnchor: [18, 46],
+  popupAnchor: [0, -46],
 });
 
 const contactChannels = [
@@ -182,7 +201,7 @@ function ContactUs() {
           </p>
         </Fade>
         <Fade triggerOnce>
-          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight">
+          <h1 className="text-2xl min-[360px]:text-3xl sm:text-5xl font-extrabold tracking-tight">
             Reach Us <span className="text-[#ffed59]">Here</span>
           </h1>
           <p className="mt-3 text-zinc-400 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
@@ -201,7 +220,8 @@ function ContactUs() {
               Our student coordinators and faculty mentors are here to support your entrepreneurial ideas and collaboration requests.
             </p>
 
-            <div className="flex flex-col gap-3.5">
+            {/* 1 col on mobile, 2 col on tablet, 1 col on desktop */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3.5">
               {contactChannels.map((channel) => (
                 <ContactCard key={channel.id} item={channel} />
               ))}
@@ -359,14 +379,14 @@ function ContactUs() {
 
       {/* Interactive Campus Map Section */}
       <div className="max-w-6xl mx-auto bg-[#131412] border border-[#26250F] p-4 sm:p-6 lg:p-8 rounded-2xl shadow-xl">
-        <div className="mb-4">
-          <h2 className="text-xl font-bold text-white">Our Location</h2>
-          <p className="text-zinc-400 text-sm">
+        <div className="mb-5">
+          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">Our Location</h2>
+          <p className="text-zinc-400 text-xs sm:text-sm mt-0.5">
             ABES Engineering College, 19th KM Stone, NH-09, Ghaziabad, Uttar Pradesh 201009
           </p>
         </div>
 
-        <div className="w-full h-64 sm:h-80 md:h-96 rounded-xl overflow-hidden border border-zinc-800 z-0">
+        <div className="w-full h-72 sm:h-80 md:h-[420px] rounded-xl overflow-hidden border border-zinc-800 shadow-inner relative z-0">
           <MapContainer
             center={position}
             zoom={15}
@@ -378,11 +398,53 @@ function ContactUs() {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               attribution="&copy; OpenStreetMap contributors"
             />
-            <Marker position={position} icon={customIcon}>
-              <Popup>
-                <div className="p-1 text-black font-sans">
-                  <p className="font-bold text-sm">E-Cell ABESEC</p>
-                  <p className="text-xs text-gray-700">ABES Engineering College, Ghaziabad</p>
+            <Marker
+              position={position}
+              icon={customMarkerIcon}
+              eventHandlers={{
+                mouseover: (e) => {
+                  e.target.openPopup();
+                },
+                click: (e) => {
+                  e.target.openPopup();
+                },
+              }}
+            >
+              <Popup maxWidth={290} minWidth={220}>
+                <div className="w-[230px] min-[360px]:w-64 sm:w-72 overflow-hidden rounded-xl bg-[#131412] text-white">
+                  <div className="relative w-full h-32 sm:h-36 overflow-hidden bg-zinc-900">
+                    <img
+                      src={abesCampusPhoto}
+                      alt="ABES Engineering College Campus"
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#131412] via-transparent to-transparent opacity-80" />
+                  </div>
+                  <div className="p-3.5 space-y-1.5">
+                    <h3 className="text-sm font-bold text-white leading-snug">
+                      ABES Engineering College
+                    </h3>
+                    <p className="text-xs text-zinc-400 flex items-center gap-1.5">
+                      <FiMapPin className="text-[#ffde59] w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" />
+                      <span>Ghaziabad, Uttar Pradesh</span>
+                    </p>
+                    <p className="text-[11px] text-zinc-500 pt-0.5">
+                      19th KM Stone, NH-09, 201009
+                    </p>
+                    <div className="pt-2 border-t border-zinc-800/80 flex items-center justify-between">
+                      <a
+                        href="https://www.google.com/maps/dir/?api=1&destination=28.6341,77.4456"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs font-semibold text-[#ffde59] hover:text-[#ffed59] flex items-center gap-1 transition-colors"
+                      >
+                        <FiNavigation className="w-3 h-3" aria-hidden="true" />
+                        <span>Get Directions</span>
+                      </a>
+                      <span className="text-[10px] text-zinc-500">E-Cell ABESEC</span>
+                    </div>
+                  </div>
                 </div>
               </Popup>
             </Marker>

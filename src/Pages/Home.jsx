@@ -36,11 +36,11 @@ function Home() {
 
           {/* Heading */}
           <Fade triggerOnce cascade damping={0.15}>
-            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-2 leading-tight">
+            <h1 className="text-2xl min-[360px]:text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-2 leading-tight">
               <span className="text-white">Welcome </span>
               <span className="text-[#FFDE59]">To</span>
             </h1>
-            <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-[#ffde59] tracking-tight mb-4 leading-tight">
+            <h2 className="text-2xl min-[360px]:text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-[#ffde59] tracking-tight mb-4 leading-tight">
               Entrepreneurship Cell
             </h2>
             <p className="text-zinc-400 text-sm sm:text-lg md:text-xl font-normal max-w-2xl mx-auto mb-8 leading-relaxed">
@@ -62,7 +62,7 @@ function Home() {
                 value={heroEmail}
                 onChange={(e) => setHeroEmail(e.target.value)}
                 placeholder="your-email@example.com"
-                className="w-full sm:flex-1 bg-transparent px-4 py-2.5 text-sm text-white focus:outline-none placeholder:text-zinc-500 rounded-full"
+                className="w-full min-w-0 sm:flex-1 bg-transparent px-4 py-2.5 text-sm text-white focus:outline-none placeholder:text-zinc-500 rounded-full"
               />
               <button
                 type="submit"
@@ -91,14 +91,14 @@ function Home() {
       </section>
 
       {/* Who We Are / Mission Section */}
-      <section className="text-white py-16 px-4 sm:px-6 lg:px-8 border-t border-zinc-900">
+      <section className="text-white py-14 sm:py-16 px-4 sm:px-6 lg:px-8 border-t border-zinc-900">
         <div className="max-w-6xl mx-auto text-center mb-12">
           <Fade triggerOnce>
             <p className="text-[#ffde59] text-xs sm:text-sm font-semibold uppercase tracking-wider mb-2">
               ABOUT US
             </p>
           </Fade>
-          <h2 className="text-3xl sm:text-5xl font-bold tracking-tight">Who We Are</h2>
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight">Who We Are</h2>
           <p className="mt-4 text-zinc-300 text-sm sm:text-base md:text-lg max-w-4xl mx-auto leading-relaxed">
             At the Entrepreneurship Cell (E-Cell) of ABES Engineering College, we&apos;re a vibrant community of student innovators driven by curiosity, ambition, and a shared passion for turning ideas into impact. Founded and run entirely by students, our core belief is that entrepreneurship isn&apos;t just a career - it&apos;s a way of thinking that empowers individuals to identify opportunities, take thoughtful risks, and continuously learn. From casual brainstorming sessions in campus cafes to organizing large-scale pitching events, we grow stronger together.
           </p>

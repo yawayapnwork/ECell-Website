@@ -27,7 +27,7 @@ function Activities() {
                 NATIONAL RECOGNITION
               </p>
             </Fade>
-            <h2 className="text-3xl sm:text-4xl font-bold leading-tight">
+            <h2 className="text-2xl min-[360px]:text-3xl sm:text-4xl font-bold leading-tight">
               National <span className="text-[#ffde59]">Entrepreneurship</span> Challenge
             </h2>
             <p className="mt-4 text-zinc-400 text-sm sm:text-base leading-relaxed">
@@ -48,7 +48,7 @@ function Activities() {
             <img
               src={eurekamb}
               alt="Eureka Runner Up at IIT Bombay"
-              className="rounded-xl shadow-lg border border-[#26250F] w-full h-[25rem] object-cover"
+              className="rounded-xl shadow-lg border border-[#26250F] w-full h-56 sm:h-72 md:h-80 lg:h-[24rem] xl:h-[26rem] object-cover"
               loading="lazy"
             />
           </div>
@@ -58,7 +58,7 @@ function Activities() {
                 REGIONAL EXCELLENCE
               </p>
             </Fade>
-            <h2 className="text-3xl sm:text-4xl font-bold leading-tight">
+            <h2 className="text-2xl min-[360px]:text-3xl sm:text-4xl font-bold leading-tight">
               Runner Up at <span className="text-[#ffde59]">Eureka 2024</span>
             </h2>
             <p className="mt-4 text-zinc-400 text-sm sm:text-base leading-relaxed">
@@ -78,7 +78,7 @@ function Activities() {
                 REAL WORLD EXPOSURE
               </p>
             </Fade>
-            <h2 className="text-3xl sm:text-4xl font-bold leading-tight">
+            <h2 className="text-2xl min-[360px]:text-3xl sm:text-4xl font-bold leading-tight">
               Visits to <span className="text-[#ffde59]">startups</span> and incubators
             </h2>
             <p className="mt-4 text-zinc-400 text-sm sm:text-base leading-relaxed">
@@ -117,7 +117,7 @@ function Activities() {
                 ENGAGING INITIATIVES
               </p>
             </Fade>
-            <h2 className="text-3xl sm:text-4xl font-bold leading-tight">
+            <h2 className="text-2xl min-[360px]:text-3xl sm:text-4xl font-bold leading-tight">
               Flagship events driving <span className="text-[#ffde59]">Entrepreneurship</span>
             </h2>
             <p className="mt-4 text-zinc-400 text-sm sm:text-base leading-relaxed">
